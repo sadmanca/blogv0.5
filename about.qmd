@@ -1,0 +1,66 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: solana
+  links:
+    - icon: twitter
+      text: sadmanca
+      href: https://twitter.com/sadmanca
+    - icon: linkedin
+      text: sadmanca
+      href: https://linkedin.com/in/sadmanca
+    - icon: github
+      text: sadmanca
+      href: https://github.com/sadmanca
+jupyter: python3      
+execute:
+  eval: false
+include-after-body:
+  text: |
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <script>
+        var snowflakes = new Snowflakes();
+    </script>
+---
+
+:::{#hero-heading}
+
+# Sadman Hossain
+
+Finley Malloc is the Chief Data Scientist at Wengo Analytics. When not innovating on data platforms, Finley enjoys spending time unicycling and playing with her pet iguana.
+
+## Education
+
+University of California, San Diego | San Diego, CA
+PhD in Mathematics | Sept 2011 - June 2015
+
+Macalester College | St. Paul MA
+B.A in Economics | Sept 2007 - June 2011
+
+```{python}
+import numpy as np
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+```
+
+
+## Experience
+
+Wengo Analytics | Head Data Scientist | April 2018 - present
+
+GeoScynce | Chief Analyst | Sept 2012 - April 2018
+
+:::
+
+### This content appears below the formatted about page content.
+
+And so we come to the third post in my extremely ill-considered foray into learning Julia. In the [first part](/posts/2024-03-01_julia-foundation/) of the series I taught myself some of the foundations for writing Julia code, in the [second part](/posts/2024-03-02_julia-data-frames/) I discussed data wrangling in Julia, and so in the third and -- dear god in heaven please -- last of them, I'll take a look at data visualisation using the [Plots](https://docs.juliaplots.org/latest/) package, and using [PalmerPenguins](https://juliapackages.com/p/palmerpenguins) as my data set.
+
+```{python}
+import numpy as np
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+```

@@ -1,0 +1,24 @@
+---
+title: "Myblog"
+subtitle: A blog by Sadman Hossain
+listing:
+  feed: true
+  contents: posts
+  fields: [image, title, subtitle, description, date, reading-time, author, image-alt, word-count, categories]
+  sort: "date desc"
+  type: default
+  grid-columns: 3
+  image-height: 150px
+  page-size: 100
+  categories: false
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+include-after-body:
+  text: |
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <script>
+        var snowflakes = new Snowflakes();
+    </script>
+---

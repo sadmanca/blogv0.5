@@ -1,0 +1,44 @@
+project:
+  type: website
+  resources:
+    - CNAME
+
+website:
+  title: "Myblog"
+  description: "A data science blog by Danielle Navarro"
+  site-url: https://blog.djnavarro.net
+  repo-url: https://github.com/djnavarro/blog
+  twitter-card:
+    creator: "@djnavarro"
+    card-style: summary_large_image
+  navbar:
+    title: false
+    background: "#eee"
+    left:
+      - href: index.qmd
+        text: Home
+      - href: index.xml
+        text: RSS
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com
+  page-footer:
+    center:
+      - href: https://blog.djnavarro.net
+        text: blog.djnavarro.net
+  search:
+    location: navbar
+    type: textbox
+format:
+  html:
+    theme:
+      light:
+        - zephyr
+        - ember.scss
+      dark:
+        - darkly
+        - ember.scss
+    css: styles.css
