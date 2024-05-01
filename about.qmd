@@ -4,15 +4,15 @@ image: profile.jpg
 about:
   template: solana
   links:
-    - icon: twitter
-      text: sadmanca
-      href: https://twitter.com/sadmanca
     - icon: linkedin
       text: sadmanca
       href: https://linkedin.com/in/sadmanca
     - icon: github
       text: sadmanca
       href: https://github.com/sadmanca
+    - icon: twitter
+      text: sadmanca
+      href: https://twitter.com/sadmanca
 jupyter: python3      
 execute:
   eval: false
@@ -20,7 +20,15 @@ include-after-body:
   text: |
     <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
     <script>
-        var snowflakes = new Snowflakes();
+        var snowflakes = new Snowflakes({
+            color: '#5ECDEF',
+            count: 40,
+            minOpacity: 0.1,
+            maxOpacity: 0.5,
+            minSize: 7,
+            maxSize: 17,
+            speed: 0.15,
+            wind: true});
     </script>
 ---
 

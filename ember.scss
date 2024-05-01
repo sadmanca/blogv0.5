@@ -1,7 +1,7 @@
 /*-- scss:defaults --*/
 
 // use zephyr as the base
-$theme: "zephyr" !default;
+$theme: "cosmos" !default;
 
 // import google fonts
 
@@ -12,8 +12,20 @@ $font-family-sans-serif: "Inter Tight", -apple-system, BlinkMacSystemFont, "Sego
 
 /*-- scss:rules --*/
 
-p {
+body, p, h1, h2, h3, h4, h5, h6, a, span, div, li, blockquote, pre, table, th, td, form, input, textarea, button, label, select, optoin, optgroup {
   font-family: $font-family-sans-serif;
+}
+
+.navbar-title {
+  font-weight: 650;
+  color: black;
+
+  &:hover {
+    font-weight: 850;
+    color: #6953ff;
+    text-decoration: underline;
+  }
+
 }
 
 .subtitle > a {

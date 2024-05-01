@@ -4,31 +4,32 @@ project:
     - CNAME
 
 website:
-  title: "Myblog"
-  description: "A data science blog by Danielle Navarro"
-  site-url: https://blog.djnavarro.net
-  repo-url: https://github.com/djnavarro/blog
+  title: "Sadman's Blog"
+  description: "A data science blog by Sadman Hossain"
+  site-url: https://sadman.ca
+  repo-url: https://github.com/sadmanca/blog
   twitter-card:
-    creator: "@djnavarro"
+    creator: "@sadmanca"
     card-style: summary_large_image
   navbar:
-    title: false
+    title: Sadman's Blog
     background: "#eee"
+    logo: "images/blog-logo.png"
+    collapse-below: lg
     left:
-      - href: index.qmd
-        text: Home
       - href: index.xml
-        text: RSS
+        text: "{{< fa square-rss >}} RSS"
     right:
-      - about.qmd
+      - href: about.qmd
+        text: "{{< fa circle-user >}} About Me"
       - icon: github
-        href: https://github.com/
+        href: https://github.com/sadmanca/blog
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/sadmanca
   page-footer:
     center:
-      - href: https://blog.djnavarro.net
-        text: blog.djnavarro.net
+      - href: https://sadman.ca
+        text: sadman.ca
   search:
     location: navbar
     type: textbox
@@ -36,7 +37,7 @@ format:
   html:
     theme:
       light:
-        - zephyr
+        # - cosmos
         - ember.scss
       dark:
         - darkly

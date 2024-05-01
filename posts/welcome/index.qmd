@@ -1,6 +1,6 @@
 ---
 title: "Plotting data in Julia"
-description: "Part three of this three-part series of Julia posts, in which I try to figure out how to draw some nice plots"
+description: "*Part three* of this `three-part series of Julia posts`, **in which I try to figure out how to draw some nice plots**"
 date: "2024-03-03"
 categories: ["Julia", "Data Visualisation"]
 image: "thumbnail.jpg"
@@ -19,6 +19,8 @@ execute:
   eval: false
 reference-location: margin
 citation-location: margin
+title-block-banner: "#000000"
+title-block-banner-color: "#FFFFFF"
 ---
 
 And so we come to the third post in my extremely ill-considered foray into learning Julia. In the [first part](/posts/2024-03-01_julia-foundation/) of the series I taught myself some of the foundations for writing Julia code, in the [second part](/posts/2024-03-02_julia-data-frames/) I discussed data wrangling in Julia, and so in the third and -- dear god in heaven please -- last of them, I'll take a look at data visualisation using the [Plots](https://docs.juliaplots.org/latest/) package, and using [PalmerPenguins](https://juliapackages.com/p/palmerpenguins) as my data set.
