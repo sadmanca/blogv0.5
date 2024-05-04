@@ -17,6 +17,7 @@ execute:
   eval: false
 reference-location: margin
 citation-location: margin
+image: blue.svg
 ---
 
 I’ve used a lot of IDEs and code editors since I first wrote a “Hello World” program in grade school, from environments as simple as Python’s IDLE to those as jam-packed as IntelliJ IDEA. For now, I’ve settled on using Microsoft’s Visual Studio Code (VS Code) for pretty much all my programming needs. It’s free, open source, and insanely configurable (it can be as lightweight or as complex as you want it to be).

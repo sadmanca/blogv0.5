@@ -17,6 +17,7 @@ execute:
   eval: false
 reference-location: margin
 citation-location: margin
+image: turquoise.svg
 ---
 
 The memorization strategy you’re probably most familiar with is rote memorization, where you try to memorize something by just repeating it to yourself over and over. And while this might work if you have a short test the day after, it's one of the worst ways you can memorize something. It's horrendously inefficient. It won't help you deeply understand a subject. And it's not going to help you remember things in the long term. But we can do better.

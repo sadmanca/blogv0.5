@@ -17,6 +17,7 @@ execute:
   eval: false
 reference-location: margin
 citation-location: margin
+image: blue (1).svg
 ---
 
 As my own high school journey comes to an end, I’ve decided to put together a few of the lessons I’ve learned over the years. I didn't have much guidance when I was a freshman coming into high school, so the following reflections are really what I would’ve told myself back then if I could do so now.

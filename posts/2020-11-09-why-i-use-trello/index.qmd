@@ -17,6 +17,7 @@ execute:
   eval: false
 reference-location: margin
 citation-location: margin
+image: green (3).svg
 ---
 
 ::: {.column-margin}
