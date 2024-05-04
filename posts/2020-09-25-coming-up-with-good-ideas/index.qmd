@@ -1,0 +1,70 @@
+---
+title: "Coming up with (good) ideas"
+description: "Sometimes it can be hard to come up with ideas that you think are good. But the point of coming up with ideas is about more than just  coming up with good ones."
+date: "2020-09-25"
+categories: ["Writing"]
+format:
+  html:
+    smooth-scroll: true
+    code-tools: true
+    code-copy: hover
+embed-resources: true
+filters:
+  - quarto
+  - line-highlight
+jupyter: python3
+execute:
+  eval: false
+reference-location: margin
+citation-location: margin
+---
+
+::: {.column-margin}
+
+```{python}
+def generate_ideas(project):
+    ideas = []
+    while not ideas:
+        idea = input(f"Bad idea for your {project} "
+                     "project: ")
+        if idea:
+            ideas.append(idea)
+        else:
+            print("Come on, even a bad idea "
+                  "is better than none!")
+    return ideas
+
+project = "next big thing"
+bad_ideas = generate_ideas(project)
+print(f"Congrats! You've embraced bad ideas "
+      f"for your {project} project.")
+```
+:::
+
+Short post, but it's important.
+
+I see this happen all the time.
+
+You’re supposed to work on a project. Maybe it's a presentation you have to give at work. Maybe it's a YouTube video you plan on making public to the world.
+
+And as you get started on working on it, you’re not sure where to start. You stare at a blank page, perhaps writing a sentence or two, only to delete them and start again at zero.
+
+> “I just can't come up with a good idea”, you say.
+
+The easiest way to come up with good ideas to be okay with coming up with bad ideas.
+
+They don't need to be original. They don't need to be awe-inspiring.
+
+Most important of all, they don't need to be perfect.
+
+Some people hesitate to write down an idea because they’re worried it’s not good enough.
+
+Some people hesitate to share an idea because they’re worried about what others will think.
+
+Choosing to throw away an idea completely because it's not what you were looking for, to keep your ideas to yourself, makes you feel safe, because you don't have to deal with the uncomfortable feeling that comes with doing something no one else thinks about doing, saying something no one else is saying.
+
+But in sacrifice for that safety, your ideas cannot grow. They can't be examined, criticized, or made better.
+
+The key is not to eliminate mistakes or bad ideas.
+
+The key is to let your bad ideas light the way to some good ones.

@@ -3,6 +3,8 @@ project:
   resources:
     - CNAME
 
+execute:
+  freeze: true
 website:
   title: "Sadman's Blog"
   description: "A data science blog by Sadman Hossain"
@@ -13,17 +15,17 @@ website:
     card-style: summary_large_image
   navbar:
     title: Sadman's Blog
-    background: "#eee"
-    logo: "images/blog-logo.png"
+    background: "#eeee"
+    logo: "images/blog-logo.svg"
     collapse-below: lg
     left:
       - href: index.xml
         text: "{{< fa square-rss >}} RSS"
     right:
       - href: about.qmd
-        text: "{{< fa circle-user >}} About Me"
+        text: "{{< fa circle-user >}} About"
       - icon: github
-        href: https://github.com/sadmanca/blog
+        href:  https://github.com/sadmanca/blog
       - icon: twitter
         href: https://twitter.com/sadmanca
   page-footer:
@@ -35,11 +37,5 @@ website:
     type: textbox
 format:
   html:
-    theme:
-      light:
-        # - cosmos
-        - ember.scss
-      dark:
-        - darkly
-        - ember.scss
+    theme: ember.scss
     css: styles.css

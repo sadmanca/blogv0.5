@@ -12,28 +12,49 @@ $font-family-sans-serif: "Inter Tight", -apple-system, BlinkMacSystemFont, "Sego
 
 /*-- scss:rules --*/
 
-body, p, h1, h2, h3, h4, h5, h6, a, span, div, li, blockquote, pre, table, th, td, form, input, textarea, button, label, select, optoin, optgroup {
+// body, p, h1, h2, h3, h4, h5, h6, a, span, div, li, blockquote, pre, table, th, td, form, input, textarea, button, label, select, optgroup {
+body, p, h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-sans-serif;
 }
 
-.navbar-title {
-  font-weight: 650;
-  color: black;
+.navbar-brand-container {
+  .navbar-title, img.navbar-logo {
+    font-weight: 750;
+    color: black;
 
-  &:hover {
-    font-weight: 850;
-    color: #6953ff;
-    text-decoration: underline;
+    &:hover {
+      color: #6953ff;
+      filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(220deg);
+      text-decoration: underline;
+    }
   }
 
+  // &:hover {
+  //   .navbar-title, img.navbar-logo {
+  //     color: #6953ff;
+  //     filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(220deg);
+  //     text-decoration: underline;
+  //   }
+  // }
 }
+
+.navbar-nav .dropdown-menu {
+  min-width: 100%;
+}
+
+// .title.listing-title {
+//   width: 400px;
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+// }
 
 .subtitle > a {
   color: #666;
   font-weight: bold
 }
 
-code {
+code, [class*="sourceCode"] {
   font-family: 'Iosevka Web', monospace;
   font-weight: 500;
 }

@@ -8,6 +8,10 @@ freeze: true
 title-block-banner: "#eeeeee"
 
 # options specified here will apply to all posts in this folder
+image: "../images/no-thumbnail.svg"
+
+back-to-top-navigation: true
+page-navigation: true
 
 # Enable CC licence appendix
 license: "CC BY"

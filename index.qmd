@@ -1,6 +1,6 @@
 ---
 title: "Sadman's Blog"
-subtitle: A blog by Sadman Hossain
+subtitle: Sometimes boring explorations into a world of software & beyond
 listing:
   feed: true
   contents: posts
@@ -11,7 +11,7 @@ listing:
   table-striped: false
   table-hover: true
   max-description-length: 200
-  image-height: 50px
+  image-height: 75px
   grid-columns: 3
   page-size: 70
   categories: false
