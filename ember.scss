@@ -17,25 +17,22 @@ body, p, h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-sans-serif;
 }
 
-.navbar-brand-container {
-  .navbar-title, img.navbar-logo {
-    font-weight: 750;
-    color: black;
+.navbar-title {
+  font-weight: 750;
+  color: black;
 
-    &:hover {
-      color: #6953ff;
-      filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(220deg);
-      text-decoration: underline;
-    }
+  &:hover {
+    color: #6953ff;
+    text-decoration: underline;
   }
+}
 
-  // &:hover {
-  //   .navbar-title, img.navbar-logo {
-  //     color: #6953ff;
-  //     filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(220deg);
-  //     text-decoration: underline;
-  //   }
-  // }
+img.navbar-logo {
+  fill: black;
+
+  &:hover {
+    filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(18) brightness(0.80);
+  }
 }
 
 .navbar-nav .dropdown-menu {
