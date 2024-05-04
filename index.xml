@@ -9,8 +9,8 @@
 <link>https://sadman.ca/</link>
 <atom:link href="https://sadman.ca/index.xml" rel="self" type="application/rss+xml"/>
 <description>A data science blog by Sadman Hossain</description>
-<generator>quarto-1.4.553</generator>
-<lastBuildDate>Sat, 08 May 2021 04:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.554</generator>
+<lastBuildDate>Sat, 08 May 2021 00:00:00 GMT</lastBuildDate>
 <item>
   <title>On keeping a journal</title>
   <dc:creator>Sadman Hossain</dc:creator>
@@ -109,7 +109,7 @@ Hossain, Sadman. 2021. <span>“On Keeping a Journal.”</span> May 8, 2021.
 </div></div></section></div> ]]></description>
   <category>Writing</category>
   <guid>https://sadman.ca/posts/2020-08-17-on-keeping-a-journal/</guid>
-  <pubDate>Sat, 08 May 2021 04:00:00 GMT</pubDate>
+  <pubDate>Sat, 08 May 2021 00:00:00 GMT</pubDate>
   <media:content url="https://sadman.ca/images/no-thumbnail.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
@@ -160,7 +160,7 @@ April 13, 2021. <a href="https://sadman.ca/posts/2021-04-13-advice-for-high-scho
 </div></div></section></div> ]]></description>
   <category>Writing</category>
   <guid>https://sadman.ca/posts/2021-04-13-advice-for-high-school-freshmen/</guid>
-  <pubDate>Tue, 13 Apr 2021 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 13 Apr 2021 00:00:00 GMT</pubDate>
   <media:content url="https://sadman.ca/images/no-thumbnail.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
@@ -229,7 +229,7 @@ Ago).”</span> January 9, 2021. <a href="https://sadman.ca/posts/2021-01-09-my-
 </div></div></section></div> ]]></description>
   <category>Writing</category>
   <guid>https://sadman.ca/posts/2021-01-09-my-vs-code-setup/</guid>
-  <pubDate>Sat, 09 Jan 2021 05:00:00 GMT</pubDate>
+  <pubDate>Sat, 09 Jan 2021 00:00:00 GMT</pubDate>
   <media:content url="https://sadman.ca/images/no-thumbnail.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
@@ -274,7 +274,7 @@ Hossain, Sadman. 2020. <span>“A Guide to Learning.”</span> December 14,
 </div></div></section></div> ]]></description>
   <category>Writing</category>
   <guid>https://sadman.ca/posts/2020-12-14-a-guide-to-learning/</guid>
-  <pubDate>Mon, 14 Dec 2020 05:00:00 GMT</pubDate>
+  <pubDate>Mon, 14 Dec 2020 00:00:00 GMT</pubDate>
   <media:content url="https://sadman.ca/images/no-thumbnail.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
@@ -382,7 +382,7 @@ Hossain, Sadman. 2020. <span>“Why I Use Trello.”</span> November 9,
 </div></div></section></div> ]]></description>
   <category>Writing</category>
   <guid>https://sadman.ca/posts/2020-11-09-why-i-use-trello/</guid>
-  <pubDate>Mon, 09 Nov 2020 05:00:00 GMT</pubDate>
+  <pubDate>Mon, 09 Nov 2020 00:00:00 GMT</pubDate>
   <media:content url="https://sadman.ca/images/no-thumbnail.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
@@ -464,7 +464,7 @@ Hossain, Sadman. 2020. <span>“How I Deal with Email.”</span> October 3,
 </div></div></section></div> ]]></description>
   <category>Writing</category>
   <guid>https://sadman.ca/posts/2020-10-03-how-i-deal-with-email/</guid>
-  <pubDate>Sat, 03 Oct 2020 04:00:00 GMT</pubDate>
+  <pubDate>Sat, 03 Oct 2020 00:00:00 GMT</pubDate>
   <media:content url="https://sadman.ca/images/no-thumbnail.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
@@ -583,7 +583,7 @@ September 25, 2020. <a href="https://sadman.ca/posts/2020-09-25-coming-up-with-g
 </div></div></section></div> ]]></description>
   <category>Writing</category>
   <guid>https://sadman.ca/posts/2020-09-25-coming-up-with-good-ideas/</guid>
-  <pubDate>Fri, 25 Sep 2020 04:00:00 GMT</pubDate>
+  <pubDate>Fri, 25 Sep 2020 00:00:00 GMT</pubDate>
   <media:content url="https://sadman.ca/images/no-thumbnail.svg" medium="image" type="image/svg+xml"/>
 </item>
 </channel>
