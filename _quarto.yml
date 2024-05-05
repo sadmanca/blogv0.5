@@ -10,6 +10,11 @@ website:
   description: "A data science blog by Sadman Hossain"
   site-url: https://sadman.ca
   repo-url: https://github.com/sadmanca/blog
+  issue-url: https://github.com/sadmanca/blog/issues/new/choose
+  repo-actions: [edit, issue, source]
+  reader-mode: true  
+  page-navigation: true
+  bread-crumbs: true
   twitter-card:
     creator: "@sadmanca"
     card-style: summary_large_image
@@ -28,14 +33,40 @@ website:
         href:  https://github.com/sadmanca/blog
       - icon: twitter
         href: https://twitter.com/sadmanca
+  google-analytics: "G-Q095PB1G6R"
   page-footer:
+    left: |
+      Supported by
+      [![](https://www.rstudio.com/assets/img/posit-logo-fullcolor-TM.svg){fig-alt="Posit" width=65px}](https://posit.co)
     center:
-      - href: https://sadman.ca
-        text: sadman.ca
+      - text: "Blog"
+        href: https://sadman.ca
+      - text: "About"
+        href: about.qmd
+      - text: "ORCID"
+        href: https://orcid.org/0000-0001-9691-420X
+    right:
+      - icon: twitter
+        href: https://twitter.com/sadmanca
+        aria-label: Twitter
+      - icon: github
+        href: https://github.com/sadmanca
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://linkedin.com/in/sadmanca
+        aria-label: GitHub
+      - icon: rss
+        href: https://sadman.ca/index.xml
+        aria-label: Blog RSS        
   search:
     location: navbar
     type: textbox
+
 format:
   html:
     theme: ember.scss
     css: styles.css
+    smooth-scroll: true
+    code-tools: true
+    code-copy: hover
+    code-overflow: wrap
