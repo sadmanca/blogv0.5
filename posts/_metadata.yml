@@ -4,6 +4,21 @@
 # (see https://quarto.org/docs/projects/code-execution.html#freeze)
 freeze: true
 
+# Enable giscus comments
+comments:
+  giscus:
+    repo: "sadmanca/blog"
+    repo-id: "MDEwOlJlcG9zaXRvcnk0MDI1OTEwNzY="
+    category: "Comments"
+    category-id: "DIC_kwDOF_8NZM4CfKh0"
+    mapping: "pathname"
+    reactions-enabled: true
+    loading: lazy
+    input-position: top
+    theme:
+      light: light # giscus theme used for light website theme
+      dark: dark_dimmed # giscus theme used for dark website theme
+
 # Enable banner style title blocks
 title-block-banner: "#eeeeee"
 
