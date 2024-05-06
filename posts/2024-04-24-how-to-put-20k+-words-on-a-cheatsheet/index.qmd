@@ -1,6 +1,6 @@
 ---
-title: "How to put 20k+ words on a cheatsheet"
-description: "The art of maximizing how much space is used on your cheatsheet while maintaining readability"
+title: "How to put 20k+ words on a cheat sheet"
+description: "The art of maximizing how much space is used on your cheat sheet while maintaining readability"
 date: "2024-04-24"
 categories: ["Writing"]
 format:
@@ -20,6 +20,48 @@ citation-location: margin
 image: cheatsheet.svg
 ---
 
-Picture it. You're finally in that type of course that allows you to put *whatever* you want on your cheatsheet for the exam, no requirement to have handwritten it on your tablet or (god forbid) using a physical pen on a physical piece of paper, just free reign to type all of it up and copy-paste images to your heart's content. As an engineering student, such a scenario appears rarely, but when it does, it is oh-so-sweet.
+Picture it. You're finally in that type of course that allows you to put *whatever* you want on your cheat sheet for the exam, no requirement to have handwritten it on your tablet or (god forbid) using a physical pen on a physical piece of paper, just free reign to type all of it up and copy-paste images to your heart's content. As an engineering student, such a scenario appears rarely, but when it does, it is oh-so-sweet.
 
-Except... when the opportunity does arise, it's usually for a course where the lecture content rivals some textbooks in just the sheer amount of concepts covered (imagine over 1k slides over the course of a semester, with each slide as dense and filled to the brim with testable content as any other). Which leads to the question: what's the best way of writing out everything you can reasonably put down on a single sheet of paper (double-sided, of course)?
+Except... when the opportunity does arise, it's usually for a course where the lecture content rivals some textbooks in just the sheer amount of concepts covered (typically 1k+ slides over the course of a semester, with each slide as dense and filled to the brim with testable content as any other). Which leads to the question: **what's the best way of writing out everything you can reasonably put down on a single sheet of paper (double-sided, of course)?**
+
+The answer is surprisingly simple. But to get there, there's 3 things we need to consider: the medium (*how* to write your cheat sheet), the message (*what* to write on it), and the machine (*how* to print it such that everything remains readable).
+
+## The Medium (picking the tool of choice for writing your cheat sheet)
+
+This really just boils down to picking one of two choices: taking a WYSIWYG editor approach (word processors the likes of Microsoft Word and Google Docs) or a programmatic approach using a typesetting engine (normally one would just use Latex, but the newcomer Typst engine shows a *lot* of promise and as we'll see later on, is a hidden gem for making all the granular changes needed for a cheat sheet).
+
+There are some third-party alternatives like https://cheatsheets-editor.com/ and [a handful of side projects posted on Github](https://www.google.com/search?q=github+cheat+sheet+maker), but they lack the fine-grained customizability that is sorely needed for making your cheat sheet pixel-perfect (including setting fractional font sizes, word and line spacing, character kerning, and most notably *image placement*).
+
+The cream of the crop is Typst, and here's why you should be using it (and why you *shouldn't* be using some of the other options at your disposal).
+
+### Google Docs/Microsoft Word
+
+I've successfully used Google Docs to make a really dense cheat sheet in the before (specifically, for an operating systems course, which, as any computer science or engineering student can tell you, has *oodles* of terminology and concepts that you need to remember), and while it's decent to some degree, it's lacking in a lot of ways (almost all of which are remedied by Typst). Here's just a few of why you shouldn't be using Google Docs for your cheat sheet:
+
+- it gets real *slow* when word count gets real high, especially in the web-based Google Docs
+- zooming in/out to parse through really small text is a hassle, especially when it comes to finding specific words or phrases amongst an ocean of text
+- making document-wide changes to text formatting (like changing the highlight colour of all bolded text) is at best a finnicky modification of document styles and at worst a completely manual endeavour involving lots of copy-pasting (and trust me, trying to use the format painter with paragraphs of teeny-tiny text without accidentally modifying anything you don't want to modify is a lesson in pure frustration)
+- it's really hard to plan out how to organize content (tables would be the ideal way of grouping text together, if they weren't so finicky to adjust), and moving content from one place to another requires so much reshuffling that it makes you question whether the whole thing is even worth it in the first place (and it is, just not if you're doing in Google Docs)
+- adding, updating, and removing images is an exercise in frustration and a reminder of how true to life that one meme is (about Word spazzing out your delicately edited formatting for the entire document when you slightly move an image by 1 mm)
+
+So the WYSIWYG editor approach just isn't going to cut it for making all the small changes you're going to need to make for your awe-inspiring cheat sheet. Which leads us to the programmatic approach, and the obvious choice, Latex.
+
+### Latex
+
+Look, I love Latex as much as the next guy, but there's a couple of key pain points with Latex that make it suboptimal compared to Typst. Specifically...
+
+- it's slow to render when there's a whole lotta text (and frustratingly, will need to render the entire document even if all you do is change a single word)
+- anything and everything requires a metric ton of boilerplate syntax (typing out backslashes and curly brackets is the last thing I want to do 1k words in)
+- it's practically impossible for the layperson to reasonably extend Latex code beyond something simple like shorthand functions for formatting text (which is most people just use templates built by people who've spent a *lot* of time on them)
+
+On that last point, I took a quick search on Github for any Latex cheat sheet templates that might be a suitable starting point for something more complex. And... yeah, while it might pass for a cheat sheet for Vim commands, it's wholly inadequate for dealing with the sheer amount of content in your average university course, and is really a microcosm of the whole boilerplate and limited (practical) extensibility issues surrounding the use of Latex for making a cheat sheet. I mean, just look at that code 😔.
+
+https://wch.github.io/latexsheet/
+
+### Typst (the cream of the crop)
+
+Now, something that I'd like to point out is that *this isn't the only **good** way of writing a cheat sheet.* By all means, you *should* use whatever you're comfortable with to type it out, especially if your goal is to write something that's good enough instead of something that's incredibly dense, yes, but also might require a wee bit more squinting than some would prefer. What I'm investigating here is a way pushing the maximum readable word count in a typed-up cheat sheet to the very limit, which is why breaking down what makes one methodology or tool suboptimal for that purpose compared to another is so important.
+
+## The Message (figuring out how to organize content on your cheat sheet)
+
+## The Machine (making sure readability and formatting are maintained on the journey from page to paper)
