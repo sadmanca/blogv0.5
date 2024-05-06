@@ -1,7 +1,5 @@
 on:
   workflow_dispatch:
-  push:
-    branches: dev
 
 name: Quarto Render and Publish (dev)
 
