@@ -1,0 +1,25 @@
+---
+title: "How to put 20k+ words on a cheatsheet"
+description: "The art of maximizing how much space is used on your cheatsheet while maintaining readability"
+date: "2024-04-24"
+categories: ["Writing"]
+format:
+  html:
+    smooth-scroll: true
+    code-tools: true
+    code-copy: hover
+embed-resources: true
+filters:
+  - quarto
+  - line-highlight
+jupyter: python3
+execute:
+  eval: false
+reference-location: margin
+citation-location: margin
+image: cheatsheet.svg
+---
+
+Picture it. You're finally in that type of course that allows you to put *whatever* you want on your cheatsheet for the exam, no requirement to have handwritten it on your tablet or (god forbid) using a physical pen on a physical piece of paper, just free reign to type all of it up and copy-paste images to your heart's content. As an engineering student, such a scenario appears rarely, but when it does, it is oh-so-sweet.
+
+Except... when the opportunity does arise, it's usually for a course where the lecture content rivals some textbooks in just the sheer amount of concepts covered (imagine over 1k slides over the course of a semester, with each slide as dense and filled to the brim with testable content as any other). Which leads to the question: what's the best way of writing out everything you can reasonably put down on a single sheet of paper (double-sided, of course)?

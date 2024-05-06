@@ -19,9 +19,8 @@ website:
     creator: "@sadmanca"
     card-style: summary_large_image
   navbar:
-    title: Sadman's Blog
+    title: "{{< iconify line-md sunny-filled-loop >}} Sadman's Blog"
     background: "#eeee"
-    logo: "images/blog-logo.svg"
     collapse-below: lg
     left:
       - href: index.xml

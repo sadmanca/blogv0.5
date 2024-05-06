@@ -1,6 +1,6 @@
 ---
 title: "Advice for high school freshmen"
-description: "What I would’ve told myself back then if I could do so nown"
+description: "What I would’ve told myself back then if I could do so now"
 date: "2021-04-13"
 categories: ["Writing"]
 format:
