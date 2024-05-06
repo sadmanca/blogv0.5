@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: dev
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -23,6 +25,6 @@ jobs:
       - name: Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
-          target: dev
+          target: dev-gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
