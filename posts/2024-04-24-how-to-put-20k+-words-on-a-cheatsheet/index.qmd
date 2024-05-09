@@ -28,11 +28,11 @@ The answer is surprisingly simple. But to get there, there's 3 things we need to
 
 ## The Medium (picking the tool of choice for writing your cheat sheet)
 
-This really just boils down to picking one of two choices: taking a WYSIWYG editor approach (word processors the likes of Microsoft Word and Google Docs) or a programmatic approach using a typesetting engine (normally one would just use Latex, but the newcomer Typst engine shows a *lot* of promise and as we'll see later on, is a hidden gem for making all the granular changes needed for a cheat sheet).
+This really just boils down to picking one of two choices: taking a WYSIWYG editor approach (word processors the likes of Microsoft Word and Google Docs) or a programmatic approach using a typesetting engine (normally one would just use LaTeX, but the newcomer Typst engine shows a *lot* of promise and as we'll see later on, is a hidden gem for making all the granular changes needed for a cheat sheet).
 
 There are some third-party alternatives like https://cheatsheets-editor.com/ and [a handful of side projects posted on Github](https://www.google.com/search?q=github+cheat+sheet+maker), but they lack the fine-grained customizability that is sorely needed for making your cheat sheet pixel-perfect (including setting fractional font sizes, word and line spacing, character kerning, and most notably *image placement*).
 
-The cream of the crop is Typst, and here's why you should be using it (and why you *shouldn't* be using some of the other options at your disposal).
+The cream of the crop is Typst, and here's why you should be using it instead of some of the other options at your disposal.
 
 ### Google Docs/Microsoft Word
 
@@ -44,24 +44,89 @@ I've successfully used Google Docs to make a really dense cheat sheet in the bef
 - it's really hard to plan out how to organize content (tables would be the ideal way of grouping text together, if they weren't so finicky to adjust), and moving content from one place to another requires so much reshuffling that it makes you question whether the whole thing is even worth it in the first place (and it is, just not if you're doing in Google Docs)
 - adding, updating, and removing images is an exercise in frustration and a reminder of how true to life that one meme is (about Word spazzing out your delicately edited formatting for the entire document when you slightly move an image by 1 mm)
 
-So the WYSIWYG editor approach just isn't going to cut it for making all the small changes you're going to need to make for your awe-inspiring cheat sheet. Which leads us to the programmatic approach, and the obvious choice, Latex.
+So the WYSIWYG editor approach just isn't going to cut it for making all the small changes you're going to need to make for your awe-inspiring cheat sheet. Which leads us to the programmatic approach, and the obvious choice, LaTeX.
 
-### Latex
+### LaTeX
 
-Look, I love Latex as much as the next guy, but there's a couple of key pain points with Latex that make it suboptimal compared to Typst. Specifically...
+Look, I love LaTeX as much as the next guy, but there's a couple of key pain points with LaTeX that make it suboptimal compared to Typst. Specifically...
 
 - it's slow to render when there's a whole lotta text (and frustratingly, will need to render the entire document even if all you do is change a single word)
 - anything and everything requires a metric ton of boilerplate syntax (typing out backslashes and curly brackets is the last thing I want to do 1k words in)
-- it's practically impossible for the layperson to reasonably extend Latex code beyond something simple like shorthand functions for formatting text (which is most people just use templates built by people who've spent a *lot* of time on them)
+- it's practically impossible for the layperson to reasonably extend LaTeX code beyond something simple like shorthand functions for formatting text (which is most people just use templates built by people who've spent a *lot* of time on them)
 
-On that last point, I took a quick search on Github for any Latex cheat sheet templates that might be a suitable starting point for something more complex. And... yeah, while it might pass for a cheat sheet for Vim commands, it's wholly inadequate for dealing with the sheer amount of content in your average university course, and is really a microcosm of the whole boilerplate and limited (practical) extensibility issues surrounding the use of Latex for making a cheat sheet. I mean, just look at that code 😔.
+On that last point, I took a quick search on Github for any LaTeX cheat sheet templates that might be a suitable starting point for something more complex. And... yeah, while it might pass for a cheat sheet for Vim commands, it's wholly inadequate for dealing with the sheer amount of content in your average university course, and is really a microcosm of the whole boilerplate and limited (practical) extensibility issues surrounding the use of LaTeX for making a cheat sheet. I mean, just look at that code 😔.
 
-https://wch.github.io/latexsheet/
+https://wch.github.io/LaTeXsheet/
 
-### Typst (the cream of the crop)
+### Typst (the ideal typesetting engine)
 
-Now, something that I'd like to point out is that *this isn't the only **good** way of writing a cheat sheet.* By all means, you *should* use whatever you're comfortable with to type it out, especially if your goal is to write something that's good enough instead of something that's incredibly dense, yes, but also might require a wee bit more squinting than some would prefer. What I'm investigating here is a way pushing the maximum readable word count in a typed-up cheat sheet to the very limit, which is why breaking down what makes one methodology or tool suboptimal for that purpose compared to another is so important.
+Typst is a new markup-based typesetting system that is designed to be as powerful as LaTeX while being much easier to learn and use (literally, just take a look at it's GitHub: https://github.com/typst/typst). It's so damn good that it absolutely deserves it's own post, but for now we'll leave that for another day. What's important to note is that it's so much easier to write virtually anything in Typst than in LaTeX, and it solves almost all of the pain points in the other tools mentioned above, including:
+
+- incremental compilation, which means that editing content updates in documents/previews **instantly** (rather than having wait between 1 and many seconds for LaTeX to compile, or for Google Docs/Microsoft Word to stop lagging)
+- easy extensibility: Typst has batteries-included functions for creating tables, drawing lines, setting colours for text and highlighted text (even gradient support is built-in), and so much more. Even the documentation for Typst is amazing, with examples to showcase how to use each of the different functions and how different arguments can affect the output (meanwhile, you pretty much have to learn how to use the intricate features of Google Docs/Microsoft Word by playing around with buttons, and I'm not even sure where you can get the core LaTeX documentation; https://www.latex-project.org/help/documentation/ is so complicated that it's rather unhelpful, and the Overleaf docs at https://www.overleaf.com/learn are nice for beginners but woefully lack the complexity needed for more advanced documents)
+  - similar to LaTeX, Typst supports importing third-party extensions and files built by other people (they're even importable into your current document in the same way, using a single line with an `#import ...` statement rather than `\usepackage{...}`).
+
+Another key characteristic of Typst is that you don't need any complicated template with tens of lines of boilerplate code to start off writing your cheat sheet so that you have some modicum of structure to follow; you can just start of with something simple (e.g. a single table with a single row and column that fills the entire page) and then build on top of it (e.g. adding more rows and columns that are dynamically sized, with optional adjustments such that some rows/columns can be larger/smaller than others, such that the single table remains filling the entire page with no additional modifications required).
+
+And what's brilliant about all of this, is that the Typst team have been generous enough to build a fully functional web application (https://typst.app/) to only store your Typst project files, but also edit them with dynamically updating previews and all sorts of bits and bobs to make your Typst writing experience oh-so-sweet (probably my favourite feature is the ability to not only click on some text or box in the output PDF preview and be immediately directed to the line of Typst markup that's generating that specific output but also, with a line of code selected, jump and zoom in directly to the specific page and portion of the generated PDF that the markup is creating; remember this for later, because it comes in incredibly handy when you're writing text at a size that's on par with some smaller species of ants). https://typst.app/ is to Typst as https://www.overleaf.com/ is to LaTeX (except the Typst web app is so much better than Overleaf that the folks over at Overleaf actually copied their "new" landing page design to mimic Typst's, which I'm not too surprised about given just how much better Typst is to use).
+
+It's awe-inspiring to think of just how powerful Typst is given how easy it is to use as well, making it a fantastic option not just for writing cheat sheets but for replacing LaTeX for a ridiculous number of purposes (as for myself, I now exclusively use Typst to typeset pretty much any PDF requiring math notation, which at the time of writing is pretty much just relegated to homework assignments for calculus/algorithms/data structures/database design courses). But we're here to figure out how to write a kickass cheat sheet, so let's get to it.
+
+https://www.linkedin.com/pulse/ditching-latex-typst-design-unique-resume-samuel-b%C3%A9land-leblanc-hbyje/
+
+### A reminder
+
+Now, something that I'd like to point out before we dive into the meat of how exactly we can use Typst to make our denser-than-osmium cheat sheet is that *this isn't the only **good** way of writing a cheat sheet.* By all means, you *should* use whatever you're comfortable with to type it out, especially if your goal is to write something that's good enough instead of something that's incredibly dense (and may also might require a wee bit more squinting than some would prefer). What I'm investigating here is a way pushing the maximum readable word count in a typed-up cheat sheet to the very limit, which is why breaking down what makes one methodology or tool suboptimal for that purpose compared to another is so important.
 
 ## The Message (figuring out how to organize content on your cheat sheet)
 
+So, here we are. We've got Typst down as our writing utencil of choice, and for the purposes of this scenario, let's suppose we're writing a cheat sheet for a computer security course (which is just as well, because I've got a raw text file just full to the brim of all the different concepts and terminology we're going to want to put on our cheat sheet).
+
+We've got our tool; now we have to figure out how to use it. And in order to do that, there's a couple of important things we need to keep in mind.
+
+### Sadman's Principles of Making Tiny Text Readable
+
+#### 1. Uniformity means readability
+
+As someone who's been writing cheat sheets over half a decade now, I've made this mistake far too many times in the name of trying to minimize how much white space I leave on my cheat sheets, and almost every time it makes them a complete mess and terribly difficult to parse (which as you can imagine is not ideal in an exam setting where you need to find very specific bits of information in a time constrained environment).
+
+Just look at this for an example, my cheat sheet for an introductory circuits/electromagnetics course from my very first year of university. I can hardly distinguish the different groups of concepts amongst all the differently sized blocks of diagrams mixed in with text, and I was the one who wrote the entire darn thing, I can only imagine how you, dear reader, must feel looking at this spagetthi gobble of a cheat sheet.
+
+How do we maintain uniformity? Well, for starters, stick with a consistent method of structuring your content. The best way of doing this, regardless of whether you're using some typesetting engine or a text editor, is with a table. Ideally, a single table that fills up the entire page (so you don't have to deal with all the spacing headaches trying to properly sandwich together multiple tables of different sizes onto the same 8.5x11 inch sheet of paper) with consistently sized rows and columns. In addition, go with justified or centre-aligned text instead of left/right-aligned (having straight edges for text boxes is a lot easier to read than text boxes with jagged edges that have no easily parseable pattern)
+
+One thing to note: it's ok to break uniformity and have something really stick out on your cheat sheet (if it's really that important, or maybe if you ran out of time and just need to put *something* onto paper), just know that when nearly everything breaks uniformity, there isn't really any uniformity to be had there (we just call that a mess).
+
+And if you're going to be using tables, there's another important principle that I like to prescribe:
+
+#### 2. It's easier to read up-down than left-right
+
+- means you should have small widths for columns, such that all you need to do is move your eyes straight down from a single horizontal position such that vertical-only movements enable you to parse through an entire column easily (trust me, this saves a lot of eye strain compared to having to read left to right and then down and back to start on the left every few lines)
+
+#### Group related content together
+
+- highlight terms while leaving their definitions as plain text so that you can look into a sea of text and quickly see whether the term you're looking for is even present at all first
+- break up multi-layered content by using multiple levels of formatting for your headings, subheadings, definitions, sub-definitions, and so on.
+  - also have separate fonts for important terms, plaintext, and special text (e.g. code, math); ensure that all work well at small scales (adjustments to character and word spacing can luckily be made by Typst, which means all you need to do is focus on readability; you can fit more characters of a thin font in the same space of whitespace compared to a wider font, so keep that in mind and maybe don't select something like [Stint Ultra Expanded](https://fonts.google.com/specimen/Stint+Ultra+Expanded))
+- have some method of clearly separating unrelated content (that minimizes use of whitespace, like a dotted line)
+
+### Other things to keep in mind
+
+- convert jpgs to svgs (better than pngs since you can easily edit them to remove backgrounds or non-essential elements from slides so that you're left with the most important details that remain readable at small sizes)
+
+### How to actually do these things in Typst
+
+<<<<go thru my code>>>>
+
 ## The Machine (making sure readability and formatting are maintained on the journey from page to paper)
+
+- black and white printers are better than color printers, because it's a lot easier to find a bw printer with a high enough DPI for printing readable size 2-3pt text 
+  - you'll notice i don't talk much about colour in this post, and this is exactly why. it's pretty much ideal to go for super high contrast black-white text styles instead of greys bc a lot of bw printers actually just reduce the number of dots printed using the small ultra black ink to make gray show up on paper (which as you can imagine is not ideal for maximizing the resolution of text and images at a small scale; this has burned me in the past a couple of times, and I have learnt to stay away from it ever since)
+- i've found that a DPI of 1200 is the sweet spot for getting really high quality prints out; while a smaller DPI could technically remain readable, i'd recommend going up in font size by a half point or two just to make your cheat sheet a bit easier to read (if you have to use a magnifying glass to read content, then you're not exactly making things easier for yourself, which is the entire point behind this whole compressing a textbook into a single sheet of paper)
+
+## The Result (what it looks like all put together)
+
+And it is a beauty, a marvel of modern (text) engineering.
+
+<<<<screen shot here (also screenshots of each part throughout the post)>>>>
+
+<<<<also link to github, here and at start of post>>>>
