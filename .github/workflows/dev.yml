@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+
+name: Quarto Render and Publish (dev)
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        
+      - name: Render
+        uses: quarto-dev/quarto-actions/render@v2
+        
+      - name: Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: dev-gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
