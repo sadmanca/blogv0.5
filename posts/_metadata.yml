@@ -5,18 +5,8 @@
 freeze: true
 
 # Enable giscus comments
-comments:
-  giscus:
-    repo: sadmanca/blog
-    repo-id: "MDEwOlJlcG9zaXRvcnk0MDI1OTEwNzY="
-    category: Comments
-    category-id: "DIC_kwDOF_8NZM4CfKh0"
-    reactions-enabled: true
-    input-position: top
-    theme: light
-    language: en
-    loading: lazy
-    mapping: pathname
+include-in-header: giscus-comments.html
+include-after-body: div-giscus.html
 
 # Enable banner style title blocks
 title-block-banner: "#eeeeee"
