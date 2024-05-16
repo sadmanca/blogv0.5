@@ -22,15 +22,19 @@ image: cheatsheet.svg
 
 Picture it. You're finally in that type of course that allows you to put *whatever* you want on your cheat sheet for the exam, no requirement to have handwritten it on your tablet or (god forbid) using a physical pen on a physical piece of paper, just free reign to type all of it up and copy-paste images to your heart's content. As an engineering student, such a scenario appears rarely, but when it does, it is oh-so-sweet.
 
-Except... when the opportunity does arise, it's usually for a course where the lecture content rivals some textbooks in just the sheer amount of concepts covered (typically 1k+ slides over the course of a semester, with each slide as dense and filled to the brim with testable content as any other). Which leads to the question: **what's the best way of writing out everything you can reasonably put down on a single sheet of paper (double-sided, of course)?**
+Except... when the opportunity does arise, it's usually for a course where the lecture content rivals some textbooks in just the sheer amount of concepts covered (typically 1k+ slides over the course of a semester, with each slide as dense and filled to the brim with testable content as any other). Which leads to the question: ***what's the best way of writing out everything you can reasonably put down on a single sheet of paper (double-sided, of course)?***
 
 The answer is surprisingly simple. But to get there, there's 3 things we need to consider: the medium (*how* to write your cheat sheet), the message (*what* to write on it), and the machine (*how* to print it such that everything remains readable).
 
 Oh, and if you're looking to take a peek at what exactly we're going to learn how to make, well, here's an example in it's full glory:
 
-{{< pdf https://raw.githubusercontent.com/sadmanca/gh-action-test/main/ECE568%20Final%20Aid%20Sheet.pdf width=100% height=100% >}}
+```{=html}
+<iframe width="100%" height="500" src="ECE568-Final-Aid-Sheet.pdf" title="ECE568-Final-Aid-Sheet"></iframe>
+```
 
-## The Medium (picking the tool of choice for writing your cheat sheet)
+## The Medium
+
+*Picking the tool of choice for writing your cheat sheet.*
 
 This really just boils down to picking one of two choices: taking a WYSIWYG editor approach (word processors the likes of Microsoft Word and Google Docs) or a programmatic approach using a typesetting engine (normally one would just use LaTeX, but the newcomer Typst engine shows a *lot* of promise and as we'll see later on, is a hidden gem for making all the granular changes needed for a cheat sheet).
 
@@ -60,19 +64,86 @@ Look, I love LaTeX as much as the next guy, but there's a couple of key pain poi
 
 On that last point, I took a quick search on Github for any LaTeX cheat sheet templates that might be a suitable starting point for something more complex. And... yeah, while it might pass for a cheat sheet for Vim commands, it's wholly inadequate for dealing with the sheer amount of content in your average university course, and is really a microcosm of the whole boilerplate and limited (practical) extensibility issues surrounding the use of LaTeX for making a cheat sheet. I mean, just look at that code 😔.
 
-https://wch.github.io/LaTeXsheet/
+[![A decent-looking LaTeX cheatsheet, albeit one that isn't necessarily the best use of space.](https://wch.github.io/latexsheet/latexsheet-thumb-0.png)](https://wch.github.io/latexsheet/)\
+
+```{.latex filename="latexsheet.tex"}
+\subsection{Common \texttt{documentclass} options}
+\newlength{\MyLen}
+\settowidth{\MyLen}{\texttt{letterpaper}/\texttt{a4paper} \ }
+\begin{tabular}{@{}p{\the\MyLen}%
+                @{}p{\linewidth-\the\MyLen}@{}}
+\texttt{10pt}/\texttt{11pt}/\texttt{12pt} & Font size. \\
+\texttt{letterpaper}/\texttt{a4paper} & Paper size. \\
+\texttt{twocolumn} & Use two columns. \\
+\texttt{twoside}   & Set margins for two-sided. \\
+\texttt{landscape} & Landscape orientation.  Must use
+                     \texttt{dvips -t landscape}. \\
+\texttt{draft}     & Double-space lines.
+\end{tabular}
+
+Usage:
+\verb!\documentclass[!\textit{opt,opt}\verb!]{!\textit{class}\verb!}!.
+
+
+\subsection{Packages}
+\settowidth{\MyLen}{\texttt{multicol} }
+\begin{tabular}{@{}p{\the\MyLen}%
+                @{}p{\linewidth-\the\MyLen}@{}}
+%\begin{tabular}{@{}ll@{}}
+\texttt{fullpage}  &  Use 1 inch margins. \\
+\texttt{anysize}   &  Set margins: \verb!\marginsize{!\textit{l}%
+                        \verb!}{!\textit{r}\verb!}{!\textit{t}%
+                        \verb!}{!\textit{b}\verb!}!.            \\
+\texttt{multicol}  &  Use $n$ columns: 
+                        \verb!\begin{multicols}{!$n$\verb!}!.   \\
+\texttt{latexsym}  &  Use \LaTeX\ symbol font. \\
+\texttt{graphicx}  &  Show image:
+                        \verb!\includegraphics[width=!%
+                        \textit{x}\verb!]{!%
+                        \textit{file}\verb!}!. \\
+\texttt{url}       & Insert URL: \verb!\url{!%
+                        \textit{http://\ldots}%
+                        \verb!}!.
+\end{tabular}
+
+Use before \verb!\begin{document}!. 
+Usage: \verb!\usepackage{!\textit{package}\verb!}!
+
+
+\subsection{Title}
+\settowidth{\MyLen}{\texttt{.author.text.} }
+\begin{tabular}{@{}p{\the\MyLen}%
+                @{}p{\linewidth-\the\MyLen}@{}}
+\verb!\author{!\textit{text}\verb!}! & Author of document. \\
+\verb!\title{!\textit{text}\verb!}!  & Title of document. \\
+\verb!\date{!\textit{text}\verb!}!   & Date. \\
+\end{tabular}
+
+These commands go before \verb!\begin{document}!.  The declaration
+\verb!\maketitle! goes at the top of the document.
+
+\subsection{Miscellaneous}
+\settowidth{\MyLen}{\texttt{.pagestyle.empty.} }
+\begin{tabular}{@{}p{\the\MyLen}%
+                @{}p{\linewidth-\the\MyLen}@{}}
+\verb!\pagestyle{empty}!     &   Empty header, footer
+                                 and no page numbers. \\
+\verb!\tableofcontents!      &   Add a table of contents here. \\
+
+\end{tabular}
+```
 
 ### Typst (the ideal typesetting engine)
 
-Typst is a new markup-based typesetting system that is designed to be as powerful as LaTeX while being much easier to learn and use (literally, just take a look at it's GitHub: https://github.com/typst/typst). It's so damn good that it absolutely deserves it's own post, but for now we'll leave that for another day. What's important to note is that it's so much easier to write virtually anything in Typst than in LaTeX, and it solves almost all of the pain points in the other tools mentioned above, including:
+Typst is a new markup-based typesetting system that is designed to be as powerful as LaTeX while being much easier to learn and use (literally, just take a look at it's GitHub: <https://github.com/typst/typst>). It's so damn good that it absolutely deserves it's own post, but for now we'll leave that for another day. What's important to note is that it's so much easier to write virtually anything in Typst than in LaTeX, and it solves almost all of the pain points in the other tools mentioned above, including:
 
 - Incremental compilation, which means that editing content updates in documents/previews **instantly** (rather than having wait between 1 and many seconds for LaTeX to compile, or for Google Docs/Microsoft Word to stop lagging)
-- Easy extensibility: Typst has batteries-included functions for creating tables, drawing lines, setting colours for text and highlighted text (even gradient support is built-in), and so much more. Even the documentation for Typst is amazing, with examples to showcase how to use each of the different functions and how different arguments can affect the output (meanwhile, you pretty much have to learn how to use the intricate features of Google Docs/Microsoft Word by playing around with buttons, and I'm not even sure where you can get the core LaTeX documentation; https://www.latex-project.org/help/documentation/ is so complicated that it's rather unhelpful, and the Overleaf docs at https://www.overleaf.com/learn are nice for beginners but woefully lack the complexity needed for more advanced documents)
+- Easy extensibility: Typst has batteries-included functions for creating tables, drawing lines, setting colours for text and highlighted text (even gradient support is built-in), and so much more. Even the documentation for Typst is amazing, with examples to showcase how to use each of the different functions and how different arguments can affect the output (meanwhile, you pretty much have to learn how to use the intricate features of Google Docs/Microsoft Word by playing around with buttons, and I'm not even sure where you can get the core LaTeX documentation; <https://www.latex-project.org/help/documentation/> is so complicated that it's rather unhelpful, and the Overleaf docs at <https://www.overleaf.com/learn> are nice for beginners but woefully lack the complexity needed for more advanced documents)
   - Similar to LaTeX, Typst supports importing third-party extensions and files built by other people (they're even importable into your current document in the same way, using a single line with an `#import ...` statement rather than `\usepackage{...}`).
 
 Another key characteristic of Typst is that you don't need any complicated template with tens of lines of boilerplate code to start off writing your cheat sheet so that you have some modicum of structure to follow; you can just start of with something simple (e.g. a single table with a single row and column that fills the entire page) and then build on top of it (e.g. adding more rows and columns that are dynamically sized, with optional adjustments such that some rows/columns can be larger/smaller than others, such that the single table remains filling the entire page with no additional modifications required).
 
-And what's brilliant about all of this, is that the Typst team have been generous enough to build a fully functional web application (https://typst.app/) to only store your Typst project files, but also edit them with dynamically updating previews and all sorts of bits and bobs to make your Typst writing experience oh-so-sweet (probably my favourite feature is the ability to not only click on some text or box in the output PDF preview and be immediately directed to the line of Typst markup that's generating that specific output but also, with a line of code selected, jump and zoom in directly to the specific page and portion of the generated PDF that the markup is creating; remember this for later, because it comes in incredibly handy when you're writing text at a size that's on par with some smaller species of ants). https://typst.app/ is to Typst as https://www.overleaf.com/ is to LaTeX (except the Typst web app is so much better than Overleaf that the folks over at Overleaf actually copied their "new" landing page design to mimic Typst's, which I'm not too surprised about given just how much better Typst is to use).
+And what's brilliant about all of this, is that the Typst team have been generous enough to build a fully functional web application (<https://typst.app/>) to only store your Typst project files, but also edit them with dynamically updating previews and all sorts of bits and bobs to make your Typst writing experience oh-so-sweet (probably my favourite feature is the ability to not only click on some text or box in the output PDF preview and be immediately directed to the line of Typst markup that's generating that specific output but also, with a line of code selected, jump and zoom in directly to the specific page and portion of the generated PDF that the markup is creating; remember this for later, because it comes in incredibly handy when you're writing text at a size that's on par with some smaller species of ants). <https://typst.app/> is to Typst as <https://www.overleaf.com/> is to LaTeX (except the Typst web app is so much better than Overleaf that the folks over at Overleaf actually copied their "new" landing page design to mimic Typst's, which I'm not too surprised about given just how much better Typst is to use).
 
 It's awe-inspiring to think of just how powerful Typst is given how easy it is to use as well, making it a fantastic option not just for writing cheat sheets but for replacing LaTeX for a ridiculous number of purposes (as for myself, I now exclusively use Typst to typeset pretty much any PDF requiring math notation, which at the time of writing is pretty much just relegated to homework assignments for calculus/algorithms/data structures/database design courses). But we're here to figure out how to write a kickass cheat sheet, so let's get to it.
 
@@ -80,13 +151,15 @@ It's awe-inspiring to think of just how powerful Typst is given how easy it is t
 
 Now, something that I'd like to point out before we dive into the meat of how exactly we can use Typst to make our denser-than-osmium cheat sheet is that *this isn't the only **good** way of writing a cheat sheet.* By all means, you *should* use whatever you're comfortable with to type it out, especially if your goal is to write something that's good enough instead of something that's incredibly dense (and may also might require a wee bit more squinting than some would prefer). What I'm investigating here is a way pushing the maximum readable word count in a typed-up cheat sheet to the very limit, which is why breaking down what makes one methodology or tool suboptimal for that purpose compared to another is so important.
 
-## The Message (figuring out how to organize content on your cheat sheet)
+## The Message
+
+*Figuring out how to organize content on your cheat sheet.*
 
 So, here we are. We've got Typst down as our writing utencil of choice, and for the purposes of this scenario, let's suppose we're writing a cheat sheet for a computer security course (which is just as well, because I've got a raw text file just full to the brim of all the different concepts and terminology we're going to want to put on our cheat sheet).
 
 We've got our tool; now we have to figure out how to use it. And in order to do that, there's a couple of important things we need to keep in mind.
 
-### Sadman's Principles of Making Tiny Text Readable
+### How to Make Tiny Text Readable
 
 #### 1. Uniformity means readability
 
@@ -115,9 +188,9 @@ And if you're going to be using tables, there's another important principle that
 
 Convert JPGs to SVGs (which are better than PNGs since you can easily edit them to remove backgrounds or non-essential elements from slides so that you're left with the most important details that remain readable at small sizes).
 
-### How to actually do these things in Typst
+### Implementing it in Typst
 
-To see the whole project in action, take a look at https://typst.app/project/rbJ15a29M2OcglqKcAuWkM. But for an overview of how each individual part of the Typst project works together, continue on reading below. (Note that there are some minute differences between the code linked above and the overview below for clarity purposes.)
+To see the whole project in action, take a look at <https://typst.app/project/rbJ15a29M2OcglqKcAuWkM>. But for an overview of how each individual part of the Typst project works together, continue on reading below. (Note that there are some minute differences between the code linked above and the overview below for clarity purposes.)
 
 ```
 PROJECT DIRECTORY STRUCTURE:
@@ -161,7 +234,9 @@ Programmability is one of Typst's strong suits, and so it's good practice to set
 
 Add another couple hundred lines of formatting code (using alias for headers, bolded text, math, highlights, and more), along with a couple thousand lines of actual cheat sheet content, and you find yourself staring at what can only be described as a marvel of modern (text) engineering.
 
-## The Machine (making sure readability and formatting are maintained on the journey from page to paper)
+## The Machine
+
+*Making sure readability and formatting are maintained on the journey from page to paper.*
 
 Black and white printers are better than color printers, because it's a lot easier to find a BW printer with a high enough DPI for printing readable size 2-3pt text. 
 
@@ -171,7 +246,9 @@ I've also found that a DPI of 1200 is the sweet spot for getting really high qua
 
 ## The Result (what it looks like all put together)
 
-{{< pdf https://raw.githubusercontent.com/sadmanca/gh-action-test/main/ECE568%20Final%20Aid%20Sheet.pdf width=100% height=100% >}}
+```{=html}
+<iframe width="100%" height="500" src="ECE568-Final-Aid-Sheet.pdf" title="ECE568-Final-Aid-Sheet"></iframe>
+```
 
 Is it readable in real life? Quite so. In fact, do you know what my most recurring thought was during the exam that I used this cheat sheet in?
 

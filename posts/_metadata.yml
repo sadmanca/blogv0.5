@@ -26,6 +26,7 @@ license: "CC BY"
 toc: true
 toc-title: Table of contents
 toc-location: left
+reader-mode: true
 
 # Default knitr options
 execute:

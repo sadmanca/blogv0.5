@@ -30,7 +30,7 @@ include-after-body:
             maxOpacity: 0.5,
             minSize: 7,
             maxSize: 17,
-            speed: 0.15,
+            speed: 0.4,
             wind: true});
     </script>
 ---

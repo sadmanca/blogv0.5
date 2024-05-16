@@ -12,7 +12,7 @@ website:
   repo-url: https://github.com/sadmanca/blog
   issue-url: https://github.com/sadmanca/blog/issues/new/choose
   repo-actions: [edit, issue, source]
-  reader-mode: true  
+  reader-mode: false  
   page-navigation: true
   bread-crumbs: true
   twitter-card:
