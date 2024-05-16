@@ -1,6 +1,6 @@
 /*-- scss:defaults --*/
 
-// use zephyr as the base
+// use cosmos as the base
 $theme: "cosmos" !default;
 
 // import google fonts
@@ -27,12 +27,8 @@ body, p, h1, h2, h3, h4, h5, h6 {
   }
 }
 
-img.navbar-logo {
-  fill: black;
-
-  &:hover {
-    filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(18) brightness(0.80);
-  }
+span.navbar-title > iconify-icon {
+  padding-right: 3pt;
 }
 
 .navbar-nav .dropdown-menu {

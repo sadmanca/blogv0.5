@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language name="Typst" section="Markup" extensions="*.typ" version="1.0" kateversion="5.0"
+    mimetype="text/x-typst" author="Nandakumar Chandrasekhar" license="MIT" style="typst"
+    indenter="cstyle" priority="1" casesensitive="1">
+    <highlighting>
+        <list name="constants">
+            <item>none</item>
+            <item>auto</item>
+            <item>true</item>
+            <item>false</item>
+        </list>
+        <list name="other">
+            <item>let</item>
+            <item>as</item>
+            <item>in</item>
+            <item>set</item>
+            <item>show</item>
+            <item>#let</item>
+            <item>#as</item>
+            <item>#in</item>
+            <item>#set</item>
+            <item>#show</item>
+        </list>
+        <list name="operator">
+            <item>and</item>
+            <item>or</item>
+            <item>not</item>
+        </list>
+        <list name="control">
+            <item>if</item>
+            <item>else</item>
+            <item>for</item>
+            <item>while</item>
+            <item>break</item>
+            <item>continue</item>
+            <item>return</item>
+            <item>#if</item>
+            <item>#else</item>
+            <item>#for</item>
+            <item>#while</item>
+            <item>#break</item>
+            <item>#continue</item>
+            <item>#return</item>
+        </list>
+        <list name="import">
+            <item>import</item>
+            <item>include</item>
+            <item>export</item>
+            <item>#import</item>
+            <item>#include</item>
+            <item>#export</item>
+        </list>
+        <contexts>
+            <context attribute="Normal Text" lineEndContext="#pop" name="Normal Text">
+                <!-- Constants -->
+                <keyword attribute="Constant" context="#stay" String="constants" />
+                <!-- Length -->
+                <RegExpr attribute="Constant" context="#stay"
+                    String="(\b(\d*)?\.?\d+([eE][+-]?\d+)?(mm|pt|cm|in|em)\b)" />
+                <!-- Angle -->
+                <RegExpr attribute="Constant" context="#stay"
+                    String="(\b(\d*)?\.?\d+([eE][+-]?\d+)?(rad|deg)\b)" />
+                <!-- Percentage -->
+                <RegExpr attribute="Constant" context="#stay"
+                    String="(\b(\d*)?\.?\d+([eE][+-]?\d+)?%)" />
+                <!-- Numeric Fraction -->
+                <RegExpr attribute="Constant" context="#stay"
+                    String="(\b(\d*)?\.?\d+([eE][+-]?\d+)?fr)" />
+                <!-- Numeric Integer -->
+                <RegExpr attribute="Constant" context="#stay"
+                    String="(\b(0x[0-9a-zA-Z]+|(0b|0o)?\d+)\b)" />
+                <!-- Numeric Float -->
+                <RegExpr attribute="Constant" context="#stay"
+                    String="(\b(\d*)?\.?\d+([eE][+-]?\d+)?\b)" />
+
+                <!-- Keywords -->
+                <keyword attribute="Keyword" context="#stay" String="other" />
+                <keyword attribute="Keyword" context="#stay" String="operator" />
+                <keyword attribute="Keyword" context="#stay" String="control" />
+                <keyword attribute="Keyword" context="#stay" String="import" />
+
+                <!-- Function -->
+                <RegExpr attribute="Function" context="#stay" String="(\b[[:alpha:]_][[:alnum:]_-]*!?(?=\[|\())" />
+                <RegExpr attribute="Function" context="#stay" String="(#[[:alpha:]_][[:alnum:]_-]*!?(?=\[|\())" />
+
+                <!-- Variables -->
+                <RegExpr attribute="Variable" context="#stay" String="(\b[[:alpha:]_][[:alnum:]_-]*(?=:))" />
+                <RegExpr attribute="Variable" context="#stay" String="(#[[:alpha:]_][.[:alnum:]_-]*)" />
+                <RegExpr attribute="Variable" context="#stay" String="([[:alpha:]_][.[:alnum:]_-]*)" />
+                <RegExpr attribute="Variable" context="#stay" String="(\b[[:alpha:]_][[:alnum:]_-]*\b)" /> -->
+
+
+                <!-- String Start -->
+                <DetectChar attribute="String" context="string" char="&quot;" />
+
+                <!-- Single Line Comment Start -->
+                <Detect2Chars char="/" char1="/" attribute="Comment" context="SingleLineComment" />
+                <!-- Multi Line Comment Start -->
+                <Detect2Chars char="/" char1="*" attribute="Comment" context="MultiLineComment" beginRegion="Comment" />
+            </context>
+            <context attribute="String" lineEndContext="#stay" name="string">
+                <!-- String End -->
+                <DetectChar attribute="String" context="#pop" char="&quot;" />
+            </context>
+            <context attribute="Comment" lineEndContext="#pop" name="SingleLineComment">
+                <!-- Single Line Comment End -->
+                <DetectSpaces />
+                <IncludeRules context="##Comments" />
+            </context>
+            <context attribute="Comment" lineEndContext="#stay" name="MultiLineComment">
+                <!-- Multi Line Comment End-->
+                <DetectSpaces />
+                <Detect2Chars char="/" char1="*" attribute="Comment" context="MultiLineComment"
+                    beginRegion="Comment" />
+                <Detect2Chars char="*" char1="/" attribute="Comment" context="#pop"
+                    endRegion="Comment" />
+                <IncludeRules context="##Comments" />
+            </context>
+        </contexts>
+        <itemDatas>
+            <itemData name="Normal Text" defStyleNum="dsNormal" />
+            <itemData name="Function" defStyleNum="dsBuiltIn" />
+            <itemData name="Keyword" defStyleNum="dsKeyword" />
+            <itemData name="Constant" defStyleNum="dsConstant" />
+            <itemData name="Comment" defStyleNum="dsComment" />
+            <itemData name="String" defStyleNum="dsString" />
+            <itemData name="Variable" defStyleNum="dsVariable"/>
+        </itemDatas>
+        <general>
+            <comments>
+                <comment name="singleLine" start="//" />
+                <comment name="multiLine" start="/*" end="*/" region="CommentFolding" />
+            </comments>
+            <keywords casesensitive="1" />
+            <folding indentationsensitive="0" />
+            <emptyLines>
+                <emptyLine regexpr="\s+" />
+                <emptyLine regexpr="\s*#.*" />
+            </emptyLines>
+            <spellchecking>
+                <encoding char="á" string="\'a" />
+                <encoding char="à" string="\`a" />
+            </spellchecking>
+        </general>
+    </highlighting>
+</language>

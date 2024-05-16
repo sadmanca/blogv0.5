@@ -8,18 +8,20 @@ execute:
 website:
   title: "Sadman's Blog"
   description: "A data science blog by Sadman Hossain"
+  favicon: images/favicon.svg
   site-url: https://sadman.ca
   repo-url: https://github.com/sadmanca/blog
   issue-url: https://github.com/sadmanca/blog/issues/new/choose
   repo-actions: [edit, issue, source]
   reader-mode: false  
+  open-graph: true
   page-navigation: true
   bread-crumbs: true
   twitter-card:
     creator: "@sadmanca"
     card-style: summary_large_image
   navbar:
-    title: "{{< iconify line-md sunny-filled-loop >}} Sadman's Blog"
+    title: "{{< iconify line-md sunny-filled-loop >}}Sadman's Blog"
     background: "#eeee"
     collapse-below: lg
     left:
