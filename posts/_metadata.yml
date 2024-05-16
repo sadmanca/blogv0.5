@@ -12,6 +12,8 @@ include-after-body: div-giscus.html
 title-block-banner: "#eeeeee"
 
 # options specified here will apply to all posts in this folder
+navbar:
+  title: "{{< iconify line-md sunny-filled-loop >}} Sadman's Blog"
 image: "../images/no-thumbnail.svg"
 
 back-to-top-navigation: true
