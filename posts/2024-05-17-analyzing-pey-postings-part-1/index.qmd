@@ -1,0 +1,119 @@
+---
+title: "Analyzing UofT PEY Co-op Job Postings - Part 1: Scraping Job Posting Data"
+description: "Collecting unstructured data from the PEY Job Portal & pipelining it to a SQLite DB"
+date: "2024-05-17"
+categories: ["Writing"]
+format:
+  html:
+    smooth-scroll: true
+    code-tools: true
+    code-copy: hover
+embed-resources: true
+filters:
+  - quarto
+  - line-highlight
+jupyter: python3
+
+reference-location: margin
+citation-location: margin
+image: resources/pey-part1.svg
+---
+
+Whether you're a new applicant to University of Toronto (UofT) Engineering/CS or someone who's going through their first, second, or even third year, you've probably been curious at one point or another about what jobs are actually posted on the much acclaimed PEY Co-op job board[^qns]. Well, as a computer engineering student at UofT who's just finished their third year (and consequently have been able to access the portal for these past two semesters), I thought it would be a good idea to do my own little data collection on the topic, along with maybe some analysis on reoccurring patterns[^quirks] (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (hundreds of jobs, posted across several months) so that future PEY Co-op students can get a better idea of what they can expect from the portal (in a nutshell: better than you'd think, although it depends on who you exactly are).
+
+[^qns]: Especially if you're not in the software industry, which for better or worse make up >70% of the jobs on the portal.
+
+[^quirks]: There's also a couple of quirks that you might not know about if you don't already have access to the portal. 
+
+# Scraping Job Posting Data
+
+The UofT PEY Co-op job board itself is located behind a login portal at <https://www.uoftengcareerportal.ca/myAccount/internship/postings.htm>. To get in, you need to a) be a student at UofT (to have valid login credentials); b) be enrolled in the PEY Co-op program; and c) be registered to start your 12-16 month internship sometime between May and September following your current year (which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal). As an engineering student who's just finished their third year, I've had privileged access for 8 months and counting, and I've been able to save data on quite the number[^all] of job postings posted on the portal (but more on that later).
+
+[^acc] Well, by the time you're reading this, I've finished my third year for quite some time.
+
+[^all] And by "quite the number", I mean every single job posted since I've had access.
+
+## What you can expect from the job board
+
+The landing page for the PEY Co-op job board hosts the same look as the one for all the cross-institutional job boards at UofT's [CLNx](https://clnx.utoronto.ca/myAccount/dashboard.htm) and uses the same organization of elements and processes for browsing, searching for, and applying to job postings, so if you're a UofT student who's used CLNx in the past[^eg-ws] you already know what it's like to experience using the PEY job board.
+
+[^eg-ws]: e.g. for applying to work study positions.
+
+::: {.column-margin}
+![The advanced search options available after clicking on `Search Job Postings`. Is *identical* to the job boards on CLNx.](resources/pey-advanced-search.jpg)
+
+![Viewed jobs (after clicking on `Viewed`). Also *identical* to the job boards on CLNx.](resources/pey-viewed.jpg)
+:::
+
+![The PEY Co-op job board landing page. Note: you need to sign in using your UofT credentials before you can access this. Source: <https://www.uoftengcareerportal.ca/myAccount/internship/postings.htm>](resources/pey-landing-page.jpg)
+
+### A sample job posting
+
+Your average PEY job posting looks like the following:
+
+[One of the earliest jobs to be posted on the job board for my cohort in 2023.](resources/pey-sample-posting.jpg)
+
+Nothing much to look at, just some basic tables with information about the job and the company, which thankfully should be simple to parse.
+
+## Getting the posting date for jobs
+
+One thing that's important to me since the very start of this project is making sure that the timestamps of job postings are available to view. As someone who took a few months before I landed a position that I was really satisified with, there were times where I felt a bit apprehensive at turning down offers for roles that I thought were fine but didn't feel excited about. I had no data beyond anecdotes from upper years about what's posted over the course of the fall and winter semesters, and so I couldn't really predict whether that dream role I had in mind was just a couple days from being posted (or whether jobs would start drying up so I should stick with whatever I had at that point in time), which is why I hope that at least one of the things this project of mine can provide is some reassurance to future PEY students about what jobs are posted and when[^but]. 
+
+[^but]: One thing to keep in mind: every year is different, and just because some company posted some number of jobs at some point in time doesn't mean that they'll do it again next year. Of course, it also doesn't mean that they won't do it again, so make sure your takeaways from the data are taken with a grain of salt.
+
+There's just one problem: there's absolutely no data indicating when a job was posted.
+
+Well, except for one thing: the `New Posting Since Last Login` button on the landing page.
+
+Whenever you login to the portal, that `New Posting Since Last Login` button gets updated with links to all of the jobs posted since your last login, so if you were to check the job board every single day and save the data for all of the job postings shown there each time you login, well, then you've successfully attributed a posting data for every single job.
+
+Which is why that's exactly what I've done for the past 243 days (and counting).
+
+### How I've been saving posting dates for jobs
+
+And it's all thanks to Gildas Lormeau's[^gildas] [SingleFile web extension](https://github.com/gildas-lormeau/SingleFile)[^cli], which allows for saving a complete web page into a single HTML file (unlike Chrome[^chrome]). In addition (and rather importantly), the SingleFile extension allows for saving pages for *all tabs in the current window* (this is important for making the whole archival process a not-headache).
+
+[^gildas]: https://github.com/gildas-lormeau
+
+[^cli]: While there's also a CLI tool available, the tricky navigation for the PEY job board website means that manually navigating to pages & then saving them using the extension is a lot easier.
+
+[^chrome]: Chrome and virtually all other browsers have a slightly more complicated setup for saving pages which makes organizing files for saved pages slightly less elegant compared to dealing with just a single file via SingleFile: when you press `Ctrl+S` on a page, it doesn't just save that page's HTML file but also a folder containing all of the media from the page (which, given that none of the job postings contain images, is just one more thing to have to delete).
+
+By CTRL-clicking on every single job posting shown behind `New Posting Since Last Login` (so that every new posting opens on a new tab) and then using the SingleFile extension to save the page each tab in one go[^ext], I'm able to condense the whole process of saving new postings for the day to just 1-2 minutes. Put each day's postings into a timestamped folder (made faster thanks to a handy AutoHotKey script that's always a keyboard shortcut away), which itself goes into a big folder on my local computer of all PEY job postings collected thus far, and I've got myself data on over 2000 job postings just waiting to be analyzed for some insights.
+
+<<<screenshot of my folder tree>>>
+
+[^ext]: Using the `Save all tabs` option under the SingleFile extension.
+
+### Why not write a script to automate saving postings?
+
+Is it possible to automate the whole process of saving data for job postings? Technically, yes, it's absolutely feasible, but given how easy it is manually save data for job postings in a minute or two for every couple hundred of jobs (with the assistance of a few scripts to make the CTRL-clicking a lot faster), it's just not worth the time to make the routine task more efficient[^xkcd1] (I'd be spending more time than I'd save, as any XKCD enjoyer can relate to[^xkcd2]).
+
+[^xkcd1]: [Automation](https://imgs.xkcd.com/comics/is_it_worth_the_time.png)
+[^xkcd2]: [Is It Worth the Time?](https://imgs.xkcd.com/comics/automation.png)
+
+# Loading job posting data to a database
+
+HTML is fine for temporary storage purposes[^issok], but I need something that will allow me to view and analyze the data in a fast, efficient, and easy-to-use manner. Enter the underrated gem of database technologies: SQLite.
+
+[^issok]: Despite a large portion of the saved HTML files conssiting of useless space in lines of JavaScript, CSS, and HTML that have nothing to do with the data that counts, it's just not worth the time investment for me to parse through every file and remove the clutter since all the saved job postings for a year only take up a couple hundred MB.
+
+Now, I've never used SQLite before[^psql], but thanks to the [`sqlite3` documentation for Python](https://docs.python.org/3/library/sqlite3.html) it looks like I'll be right-at-home as someone who's used `psycopg2` in the past[^whypy].
+
+[^psql]: Just PostgreSQL, with a bit of Python on the side via `psycopg2`.
+
+[^whypy]: And of course Python is ideal for the scale of data I'm working with here, just a couple thousand HTML files.
+
+But before I can start inputting all the data into a sqlite database, I need to figure out how to extract the key information (e.g. job title, location, description, company etc.) first.
+
+## Extracting fields from HTML of postings
+
+html2txt
+
+====================
+This isn't the first time archiving job postings has come across my mind. In my first year of university, I was *pretty* bewildered at just how many links I had access to with resources of all kinds (now that I've been able to actually look through many of them, I realize that they're not all quite as useful as one would hope). Like any enterprising student, there was one concern that persisted above all: how the heck can I get a job?
+
+Thankfully for all of us UofT students, the University of Toronto has it's university-wide job board (and much more) in the form of....
+
+AUTHOR'S NOTE: cut this short, discussion for a later date
+====================

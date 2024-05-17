@@ -4,7 +4,7 @@ project:
     - CNAME
 
 execute:
-  freeze: false
+  freeze: auto
   eval: false
   echo: true
   message: true
