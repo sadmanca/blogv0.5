@@ -4,7 +4,11 @@ project:
     - CNAME
 
 execute:
-  freeze: true
+  freeze: false
+  eval: false
+  echo: true
+  message: true
+  warning: true
 website:
   title: "Sadman's Blog"
   description: "A data science blog by Sadman Hossain"

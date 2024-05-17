@@ -13,8 +13,7 @@ filters:
   - quarto
   - line-highlight
 jupyter: python3
-execute:
-  eval: false
+
 reference-location: margin
 citation-location: margin
 image: blue.svg

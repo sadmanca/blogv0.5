@@ -1,9 +1,5 @@
 # options specified here will apply to all posts in this folder
 
-# freeze computational output
-# (see https://quarto.org/docs/projects/code-execution.html#freeze)
-freeze: true
-
 # Enable giscus comments
 include-in-header: giscus-comments.html
 include-after-body: div-giscus.html
@@ -27,12 +23,6 @@ toc: true
 toc-title: Table of contents
 toc-location: left
 reader-mode: true
-
-# Default knitr options
-execute:
-  echo: true
-  message: true
-  warning: true
 
 # Default fields for citation
 citation: true

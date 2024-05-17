@@ -14,8 +14,7 @@ about:
       text: sadmanca
       href: https://twitter.com/sadmanca
 jupyter: python3      
-execute:
-  eval: false
+
 include-after-body:
   text: |
     <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
