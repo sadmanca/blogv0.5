@@ -41,12 +41,6 @@ Oh, and if you're looking to take a peek at what exactly we're going to learn ho
 
 :::
 
-:::{.column-page}
-```{=html}
-<iframe width="100%" height="600" src="resources/ECE568-Final-Aid-Sheet.pdf" title="ECE568-Final-Aid-Sheet"></iframe>
-```
-:::
-
 Alas, putting together a behemoth of a cheatsheet like this one takes a while. It's an intricate process that involves making a number of decisions, the first of which is selecting the best tool for the job.
 
 ## The Medium
