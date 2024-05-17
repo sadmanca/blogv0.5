@@ -1,3 +1,5 @@
 jupyter
+nbformat
+nbclient 
 matplotlib
 pandas
