@@ -5,7 +5,7 @@ date: "2024-04-24"
 categories: ["Writing"]
 format:
   html:
-    smooth-scroll: true
+    smooth-scroll: false
     code-tools: true
     code-copy: hover
     syntax-definitions: 

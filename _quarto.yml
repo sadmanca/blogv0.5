@@ -71,7 +71,7 @@ format:
   html:
     theme: ember.scss
     css: styles.css
-    smooth-scroll: true
+    smooth-scroll: false
     code-tools: true
     code-copy: hover
     code-overflow: wrap

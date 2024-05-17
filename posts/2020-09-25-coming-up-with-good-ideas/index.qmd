@@ -5,7 +5,7 @@ date: "2020-09-25"
 categories: ["Writing"]
 format:
   html:
-    smooth-scroll: true
+    smooth-scroll: false
     code-tools: true
     code-copy: hover
 embed-resources: true
