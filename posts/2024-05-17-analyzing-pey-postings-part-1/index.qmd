@@ -106,9 +106,160 @@ Now, I've never used SQLite before[^psql], but thanks to the [`sqlite3` document
 
 But before I can start inputting all the data into a sqlite database, I need to figure out how to extract the key information (e.g. job title, location, description, company etc.) first.
 
-## Extracting fields from HTML of postings
+## Extracting data from HTML 
 
-html2txt
+If it were just a single page, I could use something like [Microsoft Edge's Smart Copy](https://techcommunity.microsoft.com/t5/discussions/smart-copy-is-available-in-edge-now/m-p/1909748) or the [Table Capture extension](https://chromewebstore.google.com/detail/table-capture/iebpjdmgckacbodjpijphcplhebcmeop) and call it a day, but extracting data from >20k pages is a whole different ballgame.
+
+The HTML code for each job posting page doesn't have the best formatting[^emptylines], but thanks to everything being stored in tables I can just use Python's trusty BeautifulSoup4 library on my locally saved HTML pages and get the text in every table data cell in less than 50 lines of code:
+
+[^emptylines]: 
+
+  The page Nanoleaf position above has 3506 empty lines with only 809 lines of actual HTML/CSS/JS code, and the HTML that *does* exist isn't exactly the most pleasing to read:
+  
+  ```{.html filename="43631 -_ _ _ _ _ Embedded Devices Engineering Intern - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (2024-05-17 1_10_28 AM).html"}
+  <div class="panel panel-default">
+  <div class=panel-heading>
+  <strong>APPLICATION INFORMATION</strong>
+  </div>
+  <div class=panel-body>
+  <table class="table table-bordered">
+  <tbody>
+  <tr>
+  <td>
+  <strong>Application Deadline:</strong>
+  </td>
+  <td id=npPostingApplicationInfoDeadlineDate>
+  December
+  31, 2023
+  11:59 PM</td>
+  </tr>
+  ```
+
+```{.python filename="parse.py"}
+import argparse
+from bs4 import BeautifulSoup
+
+def parse_html_file(filepath, verbose=False):
+    with open(filepath, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+
+    soup = BeautifulSoup(html_content, 'lxml')
+
+    data = {}
+    rows = soup.find_all('tr')  # find all table rows
+
+    for row in rows:
+        tds = row.find_all('td')  # find all table data cells
+        
+        if len(tds) >= 2:
+            label_td = tds[0]
+            label_text = '\n'.join(label_td.stripped_strings)
+            
+            value_td = tds[1]
+            value_text = '\n'.join(value_td.stripped_strings)
+            
+            data[label_text] = value_text
+
+    if verbose:
+        for key, value in data.items():
+            print(f"{key}: {value}")
+    else:
+        print("Parsing completed.")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Parse HTML for 2 column table data.")
+    parser.add_argument("-f", "--filepath", required=True, help="Path to the HTML file to be parsed.")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print parsed data.")
+
+    args = parser.parse_args()
+    parse_html_file(args.filepath, args.verbose)
+```
+
+::: columns
+::: {.column width="40%"}
+
+![](resources/pey-sample-posting.jpg)
+:::
+
+::: {.column width="60%"}
+
+```{.bash}
+> python parse.py --verbose --filepath "43631 -_ _ _ _ _ Embedded Devices Engineering Intern - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (2024-05-17 1_10_28 AM).html"
+
+Job Posting Status:: Expired
+Internal Status:: Not Set
+Organization Name:: Nanoleaf
+Position Type:: Professional Experience Year Co-op (PEY Co-op: 12-16 months)
+Job Title:: Embedded Devices Engineering Intern
+Job Location:: Toronto
+Job Location Type:: Hybrid with 2 mandatory days in office (But Flexible scheduling)
+If working on site, can you provide a copy of your COVID-19 safety protocols?:: Yes
+Number of Positions:: 1
+Salary:: $0.00 hourly for 0 hours per week
+Start Date:: 05/01/2024
+End Date:: 04/30/2025
+Job Function:: Engineering
+Job Description:: What You'll Do
+Our Embedded Devices Engineering Intern will eDesign and implement new software features on embedded platforms within the Nanoleaf product and technical ecosystem by:
+- Maintain and troubleshoot existing embedded software.
+- Modify and improve embedded Linux operating systems as needed.
+- Take an active part in the design of the complete product solution.
+- Collaborate cross-functionally with hardware developers to test product functionality and attain product certification
+- Manage software and product development projects according to best practices.
+Job Requirements:: Required Skills
+- Strong programming skills in C/C++ on an embedded platform.
+- Strong understanding of Object Oriented Programming concepts
+- Experienced in the design of modular, asynchronous, event-driven software.
+- Knowledge of common design patterns and concurrent programming.
+- Experienced in test-driven development and development tools (Git, Eclipse CDT).
+- Knowledge of TCP/IP, HTTP and routing.
+- Knowledge of Linux kernel and kernel drivers is valuable.
+- Knowledge and/or experience with python and common libraries are valuable.
+- Experience with Wifi, Zigbee, Bluetooth or other communication protocols are valuable
+Preferred Disciplines:: Computer Engineering
+Engineering Science (Electrical and Computer)
+Engineering Science (Energy Systems)
+Engineering Science (Infrastructure)
+Engineering Science (Machine Intelligence)
+Engineering Science (Nanoengineering)
+Engineering Science (Robotics)
+Industrial Engineering
+Materials Engineering
+Mechanical Engineering
+Targeted Co-op Programs:: View Targeted Programs
+Professional Experience Year Co-op (12 - 16 months)
+Application Deadline:: December 31, 2023 11:59 PM
+Application Receipt Procedure:: Online via system
+Additional Application Information:: Who We Are
+Nanoleaf creates smart home products that take ordinary experiences and make them extraordinary. We do this by inventing one-of-a-kind products that can help to improve the way we experience our everyday lives, building a strong team of passionate and motivated individuals who want to make an impact in the world, and through always designing with the customers’ needs in mind.
+Founded in 2012 by three engineers on a journey to make green technology desirable, the company now has offices in Shenzhen, Paris, Toronto, Hong Kong, the Philippines, Japan, and South Korea. We sell our products globally in major retailers like Apple, Best Buy, and Home Depot. We are on a mission to build an amazing global brand and team and make a positive impact on the lives of our customers and employees. We love to promote from within, and work towards growing all of our employees toward their potential and career goals. We strive to promote a positive, collaborative and pleasant work culture where everyone can feel welcomed and supported within our Nanoleaf team.
+Learn more about us here:
+nanoleaf.me
+Linkedin.com/company/nanoleaf
+Instagram | Twitter @nanoleaf
+Youtube | Facebook: @thenanoleaf
+Tiktok | Twitch @nanoleafofficial
+What We Offer
+- Competitive compensation
+- The centrally located downtown office that’s steps away from the TTC and Union/King Station
+- Opportunity to work in a startup-style environment with funding backed by a cash-positive business
+- A leadership team that cares about what success looks like for you and works with you to map out your career development and growth
+- Enjoy the freedom to express your creativity
+- Work in a team of positive, passionate and capable peers who love to work hard and play hard together
+- Quarterly team-building outings
+- Hybrid work from home + work in the office model
+Application Method:: Access applications through Engineering Career Centre
+Organization:: Nanoleaf
+Division:: R&D
+Website:: nanoleaf.me
+Length of Workterm:: FLEXIBLE PEY Co-op: 12-16 months (range)
+```
+
+Now with a method of easily extracting all the relevant data from each HTML page (the job posting ID can just be retrieved from the filename), all that's left is to automate running the parser across all files saved within timestamped subdirectories on my local computer and pipe the data into a sqlite db.
+
+## Storing data in SQLite
+
+idk
 
 ====================
 This isn't the first time archiving job postings has come across my mind. In my first year of university, I was *pretty* bewildered at just how many links I had access to with resources of all kinds (now that I've been able to actually look through many of them, I realize that they're not all quite as useful as one would hope). Like any enterprising student, there was one concern that persisted above all: how the heck can I get a job?
