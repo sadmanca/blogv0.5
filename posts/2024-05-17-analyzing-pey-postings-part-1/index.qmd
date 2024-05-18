@@ -51,7 +51,15 @@ The landing page for the PEY Co-op job board hosts the same look as the one for 
 
 Your average PEY job posting looks like the following:
 
-[One of the earliest jobs to be posted on the job board for my cohort in 2023.](resources/pey-sample-posting.jpg)
+::: {.column-body-outset}
+::: {layout-ncol=2}
+![Old design[^olddesign] for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort in 2023.](resources/pey-old-posting.jpg)
+
+[^olddesign]: This was the design used for a couple years, until the most recent redesign in late 2023 (which took place halfway through my fall semester of third year).
+
+![Current design for PEY job postings. One of the most recent jobs posted at the time of writing.](resources/pey-sample-posting.jpg)
+:::
+:::
 
 Nothing much to look at, just some basic tables with information about the job and the company, which thankfully should be simple to parse.
 
@@ -81,7 +89,34 @@ And it's all thanks to Gildas Lormeau's[^gildas] [SingleFile web extension](http
 
 By CTRL-clicking on every single job posting shown behind `New Posting Since Last Login` (so that every new posting opens on a new tab) and then using the SingleFile extension to save the page each tab in one go[^ext], I'm able to condense the whole process of saving new postings for the day to just 1-2 minutes. Put each day's postings into a timestamped folder (made faster thanks to a handy AutoHotKey script that's always a keyboard shortcut away), which itself goes into a big folder on my local computer of all PEY job postings collected thus far, and I've got myself data on over 2000 job postings just waiting to be analyzed for some insights.
 
-<<<screenshot of my folder tree>>>
+```
+- 📁PEY POSTINGS ARCHIVE/
+  - 📁2023-09-17_20-14-10/
+    - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_17_2023 8_13_11 PM).html
+    - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_17_2023 8_13_12 PM).html
+    - ...
+  - 📁2023-09-18_00-51-40/
+    - Job ID_ _ 43541 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_51_48 AM).html
+    - Job ID_ _ 43554 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_08 AM).html
+    - ...
+  - 📁2023-09-18_16-08-36/
+  - 📁2023-09-18_16-08-36/
+  - 📁2023-09-22_20-29-46/
+  - 📁2023-09-25_20-16-32/
+  - ...
+  - ...
+  - ...
+  - 📁2024-05-16_11-24-45/
+  - 📁2024-05-16_23-55-40/
+  - 📁2024-05-17_11-58-36/
+    - 48007 -_ _ _ _ _ Software Developer Intern (Fall_September 2024, 8-16 Months) - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (2024-05-17 11_57_42 AM).html
+    - 48013 -_ _ _ _ _ Solutions Engineering Intern (Fall_September 2024, 8-12 Months) - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (2024-05-17 11_57_42 AM).html
+    - 48017 -_ _ _ _ _ Research & Technology - Engineering Program Management Intern - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (2024-05-17 11_57_42 AM).html
+  - 📁2024-05-17_14-12-49/
+  - 📁2024-05-17_16-25-26/
+```
+
+<<<marginnote about how there have been many changes over time, including the ecc website redesign, my changing of how files are named in singlefile by default>>>
 
 [^ext]: Using the `Save all tabs` option under the SingleFile extension.
 
@@ -116,23 +151,33 @@ The HTML code for each job posting page doesn't have the best formatting[^emptyl
 
   The page Nanoleaf position above has 3506 empty lines with only 809 lines of actual HTML/CSS/JS code, and the HTML that *does* exist isn't exactly the most pleasing to read:
   
-  ```{.html filename="43631 -_ _ _ _ _ Embedded Devices Engineering Intern - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (2024-05-17 1_10_28 AM).html"}
-  <div class="panel panel-default">
-  <div class=panel-heading>
-  <strong>APPLICATION INFORMATION</strong>
+  ```{.html filename="Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html"}
+  <div class=orbisModuleHeader>
+  <div class=row-fluid>
+  <div class=span2>
+  <div style=text-align:center>
+  <h1>
+  Job ID
+  : 43628
+  </h1>
   </div>
-  <div class=panel-body>
-  <table class="table table-bordered">
-  <tbody>
-  <tr>
-  <td>
-  <strong>Application Deadline:</strong>
-  </td>
-  <td id=npPostingApplicationInfoDeadlineDate>
-  December
-  31, 2023
-  11:59 PM</td>
-  </tr>
+  </div>
+  <div class=span7>
+  <h1>
+  ML Developer - Software Automation &amp; Developer Infrastructure
+  </h1>
+  <h5> 
+  
+  Cerebras Systems - Computer Science 
+  </h5>
+  </div>
+  <div class=span3>
+  
+  <ul class=pager>
+  
+  <li>
+  <a href=javascript:void(0)><i class=icon-chevron-left></i>Back to Overview</a>
+  </li>
   ```
 
 ```{.python filename="parse.py"}
@@ -175,85 +220,84 @@ if __name__ == "__main__":
     parse_html_file(args.filepath, args.verbose)
 ```
 
+::: {.column-page}
 ::: columns
 ::: {.column width="40%"}
 
-![](resources/pey-sample-posting.jpg)
+![](resources/pey-old-posting.jpg){height=50%}
 :::
 
 ::: {.column width="60%"}
 
 ```{.bash}
-> python parse.py --verbose --filepath "43631 -_ _ _ _ _ Embedded Devices Engineering Intern - UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (2024-05-17 1_10_28 AM).html"
+> python parse.py --verbose --filepath "Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html"
 
-Job Posting Status:: Expired
-Internal Status:: Not Set
-Organization Name:: Nanoleaf
 Position Type:: Professional Experience Year Co-op (PEY Co-op: 12-16 months)
-Job Title:: Embedded Devices Engineering Intern
+Job Title:: ML Developer - Software Automation & Developer Infrastructure
 Job Location:: Toronto
-Job Location Type:: Hybrid with 2 mandatory days in office (But Flexible scheduling)
-If working on site, can you provide a copy of your COVID-19 safety protocols?:: Yes
+Job Location Type:: Flexible
+If working on site, can you provide a copy of your COVID-19 safety protocols?:: No
 Number of Positions:: 1
-Salary:: $0.00 hourly for 0 hours per week
-Start Date:: 05/01/2024
-End Date:: 04/30/2025
-Job Function:: Engineering
-Job Description:: What You'll Do
-Our Embedded Devices Engineering Intern will eDesign and implement new software features on embedded platforms within the Nanoleaf product and technical ecosystem by:
-- Maintain and troubleshoot existing embedded software.
-- Modify and improve embedded Linux operating systems as needed.
-- Take an active part in the design of the complete product solution.
-- Collaborate cross-functionally with hardware developers to test product functionality and attain product certification
-- Manage software and product development projects according to best practices.
-Job Requirements:: Required Skills
-- Strong programming skills in C/C++ on an embedded platform.
-- Strong understanding of Object Oriented Programming concepts
-- Experienced in the design of modular, asynchronous, event-driven software.
-- Knowledge of common design patterns and concurrent programming.
-- Experienced in test-driven development and development tools (Git, Eclipse CDT).
-- Knowledge of TCP/IP, HTTP and routing.
-- Knowledge of Linux kernel and kernel drivers is valuable.
-- Knowledge and/or experience with python and common libraries are valuable.
-- Experience with Wifi, Zigbee, Bluetooth or other communication protocols are valuable
+Salary:: $42.00 hourly for 40.0 hours per week
+Start Date:: 05/06/2024
+End Date:: 04/25/2025
+Job Function:: Information Technology (IT)
+Job Description:: Cerebras Systems has pioneered a groundbreaking chip and system that revolutionizes deep learning applications. Our system empowers ML researchers to achieve unprecedented speeds in training and inference workloads, propelling AI innovation to new horizons.
+The Condor Galaxy 1 (CG-1), unveiled in a recent announcement, stands as a testament to Cerebras' commitment to pushing the boundaries of AI computing. With a staggering 4 ExaFLOP processing power, 54 million cores, and 64-node architecture, the CG-1 is the first of nine powerful supercomputers to be built and operated through an exclusive partnership between Cerebras and G42. This strategic collaboration aims to redefine the possibilities of AI by creating a network of interconnected supercomputers that will collectively deliver a mind-boggling 36 ExaFLOPS of AI compute power upon completion in 2024.
+Cerebras is building a team of exceptional people to work together on big problems. Join us!.
+About The Role
+As a Machine Developer - Software Automation & Developer Infrastructure Engineer, you will use your knowledge of testing and testability to influence better software design, promote proper engineering practice, bug prevention strategies, testability, scalability, and other advanced quality concepts. The position will play a huge role in the quality of Cerebras software. We are looking for engineers that have a broad set of technical skills and who are ready to tackle the biggest at-scale problems in HW-based deep learning accelerators.
+Responsibilities
+Write scripts to automate testing and create tools to allow easy development of software regression tests
+Help identify weak spots and potential customer pain points and drive the software organization towards customer focused quality metrics
+Implement creative ways to break software and identify potential problems
+Contribute to developing requirements specifications with a focus on developing verification tests
+Job Requirements:: Requirements
+Enrolled within University of Toronto's PEY program with a degree in Computer Science, Computer Engineering, or any other related discipline
+Experience in developing automated tests for compute/machine learning or networking systems within a large-scale enterprise environment
+Ability to take responsibility for monitoring product development and usage at all levels with an end goal toward improving product quality
+Strong knowledge of software system design, C++ and Python
+Preferred
+Strong software testing experience with a proven track record in scaling highly technical teams
+Knowledge of UNIX/Linux and Windows environments
+Knowledge of neural network architecture and ML/AI deep learning principles
+Prior experience in designing and developing test automation for HW systems involving ASICs or FPGAs
+Prior experience working with live hardware systems and debug tools operating in a real time environment such as networking devices or live computing systems
 Preferred Disciplines:: Computer Engineering
+Computer Science
 Engineering Science (Electrical and Computer)
-Engineering Science (Energy Systems)
 Engineering Science (Infrastructure)
 Engineering Science (Machine Intelligence)
-Engineering Science (Nanoengineering)
 Engineering Science (Robotics)
-Industrial Engineering
-Materials Engineering
-Mechanical Engineering
-Targeted Co-op Programs:: View Targeted Programs
+All Co-op programs:: No
+Targeted Co-op Programs:: Targeted Programs
 Professional Experience Year Co-op (12 - 16 months)
-Application Deadline:: December 31, 2023 11:59 PM
+Application Deadline:: Nov 1, 2023 11:59 PM
 Application Receipt Procedure:: Online via system
-Additional Application Information:: Who We Are
-Nanoleaf creates smart home products that take ordinary experiences and make them extraordinary. We do this by inventing one-of-a-kind products that can help to improve the way we experience our everyday lives, building a strong team of passionate and motivated individuals who want to make an impact in the world, and through always designing with the customers’ needs in mind.
-Founded in 2012 by three engineers on a journey to make green technology desirable, the company now has offices in Shenzhen, Paris, Toronto, Hong Kong, the Philippines, Japan, and South Korea. We sell our products globally in major retailers like Apple, Best Buy, and Home Depot. We are on a mission to build an amazing global brand and team and make a positive impact on the lives of our customers and employees. We love to promote from within, and work towards growing all of our employees toward their potential and career goals. We strive to promote a positive, collaborative and pleasant work culture where everyone can feel welcomed and supported within our Nanoleaf team.
-Learn more about us here:
-nanoleaf.me
-Linkedin.com/company/nanoleaf
-Instagram | Twitter @nanoleaf
-Youtube | Facebook: @thenanoleaf
-Tiktok | Twitch @nanoleafofficial
-What We Offer
-- Competitive compensation
-- The centrally located downtown office that’s steps away from the TTC and Union/King Station
-- Opportunity to work in a startup-style environment with funding backed by a cash-positive business
-- A leadership team that cares about what success looks like for you and works with you to map out your career development and growth
-- Enjoy the freedom to express your creativity
-- Work in a team of positive, passionate and capable peers who love to work hard and play hard together
-- Quarterly team-building outings
-- Hybrid work from home + work in the office model
-Application Method:: Access applications through Engineering Career Centre
-Organization:: Nanoleaf
-Division:: R&D
-Website:: nanoleaf.me
+If by Website, go to:: https://www.cerebras.net/careers/?gh_jid=5321500003
+Additional Application Information:: Please apply with
+both resume & transcript.
+Lacking transcript will disqualify you from being considered.
+Note that applications will be considered on a rolling basis. Apply as early as possible.
+Note to PEY Co-op applicants: In addition to your application by email/website, please ensure that you select the “I intend to apply for this position” tab on the portal.  This will give us a record of your submitted application in the event that you will be invited for interviews.
+U of T Job Coordinator:: Yasmine Abdelhady
+Organization:: Cerebras Systems
+Division:: Computer Science
+Website:: https://cerebras.net/
 Length of Workterm:: FLEXIBLE PEY Co-op: 12-16 months (range)
 ```
+
+:::
+:::
+:::
+
+### Finetuning data extraction 
+
+There's a few nuances to the data extraction that mean this simple script needs *just* a bit more extending so it can properly parse the entire local dataset. One nuance is the fact that the formatting for HTML pages has changed[^attimes] (several times actually) over the course of the last two semesters. Since the location of the data has always remained in tables, that's largely a non-issue. While the job title and company name included in the header above any table on job posting pages are currently missed by the script, that data is also present in the tables below (and extracted by the script properly), so that, too, is a non-issue. With one exception: job IDs aren't extracted. Luckily, I had the foresight to configure SingleFile to include the job ID automatically as part of the filename for each HTML page[^except] back when I started the archival process, so I can add some logic to parse that too and nothing of value is missed.
+
+[^except]: Except for the first 5 job postings I ever saved (which I can just manually edit filenames for to ensure that the script parses them properly).
+
+[^attimes]: At times purposefully by myself (e.g. adding Job ID and later Job Title to filenames for saved HTML files for easier file browsing and duplication checking), and at times by the university (i.e. there was a big redesign of the job board that took place in the latter half of the fall semester, which made it so the PEY job board uses the same frontend design as job boards on CLNx, whereas prior to that it looked a bit different despite functionally working the same).
 
 Now with a method of easily extracting all the relevant data from each HTML page (the job posting ID can just be retrieved from the filename), all that's left is to automate running the parser across all files saved within timestamped subdirectories on my local computer and pipe the data into a sqlite db.
 
