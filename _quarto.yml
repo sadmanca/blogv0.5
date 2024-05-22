@@ -4,7 +4,7 @@ project:
     - CNAME
 
 execute:
-  freeze: false
+  freeze: auto
   eval: false
   echo: true
   message: true
@@ -17,7 +17,7 @@ website:
   repo-url: https://github.com/sadmanca/blog
   issue-url: https://github.com/sadmanca/blog/issues/new/choose
   repo-actions: [edit, issue, source]
-  reader-mode: false  
+  reader-mode: false
   open-graph: true
   page-navigation: true
   bread-crumbs: true
@@ -62,7 +62,7 @@ website:
         aria-label: GitHub
       - icon: rss
         href: https://sadman.ca/index.xml
-        aria-label: Blog RSS        
+        aria-label: Blog RSS
   search:
     location: navbar
     type: textbox
