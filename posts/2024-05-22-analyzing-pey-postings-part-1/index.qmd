@@ -1,7 +1,7 @@
 ---
 title: "Analyzing UofT PEY Co-op Job Postings (2023-2024) - Part 1: Scraping Job Board Data"
 description: "Collecting unstructured data on ~2k job postings from UofT's PEY Co-op job board & pipelining it to a single SQLite DB less than 10MB in size"
-date: "2024-05-17"
+date: "2024-05-22"
 categories: ["Writing"]
 format:
   html:
@@ -23,15 +23,19 @@ citation-location: margin
 image: resources/pey-part1.svg
 ---
 
-Whether you're a new applicant to University of Toronto (UofT) Engineering/CS or someone who's going through their first, second, or even third year, you've probably been curious at one point or another about what jobs are actually posted on the much acclaimed PEY Co-op job board[^qns]. 
+Whether you're a new applicant to engineering/computer science at the University of Toronto (UofT) or someone who's going through their first, second, or even third or fourth years, you've probably been curious at one point or another about what jobs are actually posted on the much acclaimed[^welltosome] PEY Co-op job board[^qns] for 12-16 month positions .
 
-Well, as a computer engineering student at UofT who's just finished their third year (and consequently have been able to access the portal for these past two semesters), I thought it would be a good idea to do my own little data collection on the topic, along with maybe some analysis on reoccurring patterns[^quirks] (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (hundreds of jobs, posted across several months) so that future PEY Co-op students can get a better idea of what they can expect from the portal (in a nutshell: better than you'd think, although it depends on who you exactly are).
+[^welltosome]: well, to some, at least
+
+Well, as a computer engineering student at UofT who's just finished their third year (and who's consequently been able to access the portal for the past two semesters), I thought it would be interesting to my own little data collection on the topic, along with some analysis on recurring patterns[^quirks] (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (thousands of jobs posted across several months) so that future PEY Co-op students can get a better idea of what they can expect from the portal[^nutshell].
+
+[^nutshell]: In a nutshell: better than you'd think, although it depends on who you exactly are. In some cases, it can be a *lot* worse.
 
 [^qns]: Especially if you're not in the software industry, which for better or worse make up >70% of the jobs on the portal.
 
 [^quirks]: There's also a couple of quirks that you might not know about if you don't already have access to the portal.
 
-# Scraping Job Posting Data
+# Scraping job posting data
 
 The UofT PEY Co-op job board itself is located behind a login portal at [uoftengcareerportal.ca/myAccount/internship/postings.htm](https://uoftengcareerportal.ca/myAccount/internship/postings.htm). To get in, you need to a) be a student at UofT (to have valid login credentials); b) be enrolled in the PEY Co-op program; and c) be registered to start your 12-16 month internship sometime between May and September following your current year (which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal). As an engineering student who's just finished their third year[^acc], I've had privileged access for 8 months and counting, and I've been able to save data on quite the number[^all] of job postings posted on the portal (but more on that later).
 
@@ -52,24 +56,20 @@ The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.
 :::: {.columns}
 
 ::: {.column width="53%"}
-![The PEY Co-op job board landing page (`Job Postings`).](resources/pey-landing-page.jpg){width=700}
+![The PEY Co-op job board landing page (`Job Postings`).](resources/pey-landing-page.jpg){width=500}
 
-![Viewed jobs (`Viewed`). Note: the page shows that I've viewed 2164 jobs on the portal, even though there were only ~1.8k PEY Co-op positions ever posted (as you'll learn later on). ***Why's that?*** Well, the remaining ~300 jobs are actually from when the portal opened up for my cohort's [PEY Co-op **summer** work-term (12-16 weeks).](https://engineeringcareers.utoronto.ca/pey-co-op-overview/)](resources/pey-viewed.jpg){width=700}
-:::
-
-::: {.column width="2%"}
-
+![Viewed jobs (`Viewed`). Note: the page shows that I've viewed 2164 jobs on the portal, even though there were only ~1.8k PEY Co-op positions ever posted (as you'll learn later on). ***Why's that?*** Well, the remaining ~300 jobs are actually from when the portal opened up for my cohort's [PEY Co-op **summer** work-term (12-16 weeks)](https://engineeringcareers.utoronto.ca/pey-co-op-overview/)](resources/pey-viewed.jpg). I'll leave a dive into summer job postings for sometime in the future.{width=700}
 :::
 
 ::: {.column width="45%"}
-![Advanced search options (`Search Job Postings`).](resources/pey-advanced-search.jpg){width=700}
+![Advanced search options (`Search Job Postings`).](resources/pey-advanced-search.jpg){width=800}
 :::
 
 ::::
 
 :::
 
-### A sample job posting
+### Sample job postings
 
 Your average PEY job postings look like the below. *Note:* The design on the left was used for a couple years, until the most recent redesign in late 2023 (which took place halfway through my fall semester of third year). If you're an upcoming PEY Co-op student, job postings should look like the right for you.
 
@@ -77,16 +77,16 @@ Your average PEY job postings look like the below. *Note:* The design on the lef
 
 :::: {.columns}
 
-::: {.column width="58%"}
-![Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: `ML Developer - Software Automation & Developer Infrastructure` @ `Cerebras`](resources/pey-old-posting.jpg){width=600}
+::: {.column width="53%"}
+![Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: `ML Developer - Software Automation & Developer Infrastructure` @ `Cerebras`](resources/pey-old-posting.jpg){width=500}
 :::
 
-::: {.column width="2%"}
+::: {.column width="1%"}
 
 :::
 
-::: {.column width="40%"}
-![Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: `Software Developer Intern` @ `Geotab`](resources/pey-sample-posting.jpg){width=600}
+::: {.column width="46%"}
+![Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: `Software Developer Intern` @ `Geotab`](resources/pey-sample-posting.jpg){width=650}
 :::
 
 ::::
@@ -162,7 +162,7 @@ Is it possible to automate the whole process of saving data for job postings? Te
 [^xkcd1]: [![xkcd: "Automation"](https://imgs.xkcd.com/comics/is_it_worth_the_time.png)](https://xkcd.com/1205/)
 [^xkcd2]: [![xkcd: "Is It Worth the Time?"](https://imgs.xkcd.com/comics/automation.png)](https://xkcd.com/1319/)
 
-# Loading job posting data to a database
+# Storing job postings in a database
 
 HTML is fine for temporary storage purposes[^issok], but I need something that will allow me to view and analyze the data in a fast, efficient, and easy-to-use manner. Enter the underrated gem of database technologies: SQLite.
 
@@ -184,11 +184,15 @@ The HTML code for each job posting page doesn't have the best formatting[^emptyl
 
 [^emptylines]:
 
-  The page for the Cerebras position above has 3506 empty lines with only 809 lines dedicated to actual code, and the HTML code on non-empty lines isn't exactly the most pleasing to read:
+    The page for the Cerebras position above has 3506 empty lines with only 809 lines dedicated to actual code, and the HTML code on non-empty lines isn't exactly the most pleasing to read:
+
+    ```{=html}
+    <p style="margin-bottom:5pt;"></p>
+    ```
 
     ```{.html filename="sample_job.html"}
-    <!-- Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html --> 
-    
+    <!-- Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html -->
+
     <div class=orbisModuleHeader>
     <div class=row-fluid>
     <div class=span2>
@@ -215,7 +219,7 @@ The HTML code for each job posting page doesn't have the best formatting[^emptyl
     <li>
     <a href=javascript:void(0)><i class=icon-chevron-left></i>Back to Overview</a>
     </li>
-    
+
     <!-- ... -->
     ```
 
@@ -259,18 +263,30 @@ if __name__ == "__main__":
     parse_html_file(args.filepath, args.verbose)
 ```
 
-::: {.column-page}
-:::: columns
-::: {.column width="40%"}
+```{=html}
+<p style="margin-bottom:2.5cm;"></p>
+```
 
-![](resources/pey-old-posting.jpg){width=500}
+Trying out the quickly-written `parse.py` script on one of the saved HTML pages, and it's able to get all of the values for all of the table fields with no issues:
+
+::: {.column-body-outset}
+:::: columns
+::: {.column width="54%"}
+
+![](resources/pey-old-posting.jpg){width=550}
 :::
 
-::: {.column width="60%"}
+::: {.column width="1%"}
+
+:::
+
+::: {.column width="45%"}
 
 ```{.bash}
-> python parse.py --verbose --filepath "Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html"
-
+$ python parse.py --verbose --filepath "Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html"
+```
+::: {style="font-size: 75%;"}
+```{.txt .code-overflow-wrap}
 Position Type:: Professional Experience Year Co-op (PEY Co-op: 12-16 months)
 Job Title:: ML Developer - Software Automation & Developer Infrastructure
 Job Location:: Toronto
@@ -325,6 +341,7 @@ Division:: Computer Science
 Website:: https://cerebras.net/
 Length of Workterm:: FLEXIBLE PEY Co-op: 12-16 months (range)
 ```
+:::
 
 :::
 ::::
@@ -332,17 +349,18 @@ Length of Workterm:: FLEXIBLE PEY Co-op: 12-16 months (range)
 
 ### Finetuning data extraction
 
-There's a few nuances to the data extraction that mean this simple script needs *just* a bit more extending so it can properly parse the entire local dataset. One nuance is the fact that the formatting for HTML pages has changed[^attimes] (several times actually) over the course of the last two semesters. Since the location of the data has always remained in tables, that's largely a non-issue. While the job title and company name included in the header above any table on job posting pages are currently missed by the script, that data is also present in the tables below (and extracted by the script properly), so that, too, is a non-issue. With one exception: job IDs aren't extracted. Luckily, I had the foresight to configure SingleFile to include the job ID automatically as part of the filename for each HTML page back when I started the archival process, so I can add some logic to parse that as well. Unluckily, however, there were a few periods of time where that configuration was lost[^eglost], so I'm going to have to do some file contents parsing regardless.
+There's a few nuances to the data extraction that mean this simple script needs *just* a bit more extending so it can properly parse the entire local dataset. I'm getting the text corresponding to any inline links, but the links themselves aren't included since they're within the html `<a>` tags, so I need to add handling for those as well. Another nuance is the fact that the formatting for HTML pages has changed[^attimes] (several times actually) over the course of the last two semesters. Since the location of the data has always remained in tables, that's largely a non-issue. While the job title and company name included in the header above any table on job posting pages are currently missed by the script, that data is also present in the tables below (and extracted by the script properly), so that, too, is a non-issue. With one exception: job IDs aren't extracted. Luckily, I had the foresight to configure SingleFile to include the job ID automatically as part of the filename for each HTML page back when I started the archival process, so I can add some logic to parse that as well. Unluckily, however, there were a few periods of time where that configuration was lost[^eglost], so I'm going to have to do some file contents parsing regardless.
 
 [^eglost]: At one point, all of my extensions were uninstalled *somehow* (probably due to a Chrome update gone wrong), and so I had forgotten to reconfigure SingleFile to include job IDs in the saved filenames for many ways until I got some free time and was able to pore over my notes (and reconfigure everything back to the way it was).
 
 [^attimes]: At times purposefully by myself (e.g. adding Job ID and later Job Title to filenames for saved HTML files for easier file browsing and duplication checking), and at times by the university (i.e. there was a big redesign of the job board that took place in the latter half of the fall semester, which made it so the PEY job board uses the same frontend design as job boards on CLNx, whereas prior to that it looked a bit different despite functionally working the same).
 
-A quick manual parsing of the different HTML files shows that there's only two different locations[^foroldandnew] that job IDs can be located, so I can just add another function to try and find the job ID located at either location in all files, and now that I'm able to extract all the job IDs as well:
+A quick manual parsing of the different HTML files shows that there's only two different locations[^foroldandnew] that job IDs can be located, so I can just add another function to try and find the job ID located at either location in all files and I'm now able to extract all the job IDs as well:
 
 [^foroldandnew]: One for the old design, and the other for the new design.
 
-```{.python filename="parse.py"}
+::: {style="font-size: 75%;"}
+```{.python filename="parse.py" .code-overflow-scroll}
 import argparse
 from bs4 import BeautifulSoup
 import re #<<
@@ -407,6 +425,7 @@ if __name__ == "__main__":
     else:
         print("Parsing completed.")
 ```
+:::
 
 Now with a method of easily extracting all the relevant data from each HTML page, all that's left is to automate running the parser across all files saved within timestamped subdirectories on my local computer and pipe the data into a SQLite DB.
 
@@ -414,9 +433,9 @@ Now with a method of easily extracting all the relevant data from each HTML page
 
 ### Why SQLite?
 
-SQLite sits right there in the sweet middle spot between raw data formats (like CSV, JSON) that are good fits for simple data (e.g. temperature, word lists) but aren't as great for larger datasets with more complexity (especially when it comes to data analysis) and other larger RDBMSs[^RDBMS] that might be better designed for larger scaleability but are really just overkill for the little pet project that I have here at hand.
+SQLite sits right there in the sweet middle spot between raw data formats (like CSV, JSON) that are good fits for simple data (e.g. temperature, word lists) but aren't as great for larger datasets with more complexity (especially when it comes to data analysis) and other larger RDBMS[^RDBMS] libraries that might be better designed for scaleability but are really just overkill for the little pet project that I have here at hand.
 
-[^RDBMS]: relational database management systems
+[^RDBMS]: relational database management system
 
 And the fact that SQLite is a single file on disk means that sharing the finely extracted and processed data is a lot easier too, which is important for me because I want future PEY co-op students to learn what they can from the dataset and better set their expectations for what to expect from program (and I hope the data helps prospective UofT students better make their admission decisions as well).
 
@@ -484,8 +503,11 @@ if __name__ == "__main__":
 
 #### Parsing to `.db`
 
-Finally, with some additional code for properly parsing through all subfolders in my local directory and setting the `postingDate` value based on the folder name[^timestamped] for each file, I can create transform the entire dataset of >1.8k job postings into a single `.db` file under 10MB in size in less than 2 min[^onaharddrive].
+Finally, with some additional code for properly parsing through all subfolders in my local directory and setting the `postingDate` value based on the folder name[^timestamped] for each file, I can transform the entire dataset of >1.8k job postings into a single `.db` file under 10MB in size in ~3 min[^anditdd].
 
+[^anditdd]: Which'd probably take even less time if it weren't running on an old spinning hard drive.
+
+::: {style="font-size: 75%;"}
 ```{.python filename="parse_to_db.py"}
 import argparse
 from bs4 import BeautifulSoup
@@ -546,7 +568,7 @@ def parse_html_file(filepath, job_posting_date, verbose=False):
                 value_text = value_text.replace(link_text, f'{link_text} ({url})') #<<
 
             # Map label_text to corresponding database column #<<
-            column_mapping = {
+            column_mapping = { #<<
                 # 'Job ID': 'id', #<<
                 # 'Job Posting Date': 'postingDate', #<<
                 'Job Title': 'title', #<<
@@ -652,37 +674,77 @@ if __name__ == "__main__":
     conn.close() #<<
     logging.info("Parsing and storing completed.") #<<
 ```
+:::
 
-![Parsing through the dataset](https://camo.githubusercontent.com/0b2c7a851395cb8e11e7dee5c38d121ffe3efd424b0dad9f13878c8bfd95d623/68747470733a2f2f63646e2e7261776769742e636f6d2f6d6172696f6e65626c2f7376672d7465726d2d636c692f31323530663963312f6578616d706c65732f706172726f742e737667)
+![Parsing through the dataset](https://raw.githubusercontent.com/tqdm/tqdm/blob/74722959a8626fd2057be03e14dcf899c25a3fd5/images/tqdm.gif)
 
-[^onaharddrive]: And that's on a spinning disk hard drive!
+[^timestamped]: e.g. `📁2023-09-17_20-14-10`; easily achievable thanks to [github.com/sadmanca/ahk-scripts/blob/master/keys.ahk](https://github.com/sadmanca/ahk-scripts/blob/master/keys.ahk#L54)
 
-[^timestamped]: e.g. `📁2023-09-17_20-14-10`; easily done thanks to [github.com/sadmanca/ahk-scripts/blob/master/keys.ahk](https://github.com/sadmanca/ahk-scripts/blob/master/keys.ahk#L54)
+# Viewing the data
 
-## Results
+And so we have it: a single database file storing every single job posted on the UofT PEY Co-op job board for 2T5s[^2t5] (from 2023 to 2024). You can play around with querying the data below, or download the SQLite `.db` file from the latest release at [github.com/sadmanca/uoft-pey-coop-job-postings-analysis](https://github.com/sadmanca/uoft-pey-coop-job-postings-analysis) and play around with it yourself.
 
-And so we have it: a single database file storing every single job posted on the UofT PEY Co-op job board for 2T5s (from 2023 to 2024). You can play around with querying the data below, or download the SQLite `.db` file at the link below.
+[^2t5]: UofT Engineering students and alumni often include their graduation year after their name to denote their class. If you start first year in 2021, you will be part of the class of 2025, denoted as “2T5” (pronounced “two-tee-five”).
 
 ```{.sql .interactive .hr}
 select * from regions;
 ```
 
+## Sample queries
+
+How many job postings are there for mechatronics-adjacent positions?
+
+```{.sql .interactive .hr}
+SELECT * FROM JobPosting
+WHERE title LIKE '%mechatronic%'
+OR company LIKE '%mechatronic%'
+OR companyDivision LIKE '%mechatronic%'
+OR companyWebsite LIKE '%mechatronic%'
+OR location LIKE '%mechatronic%'
+OR locationType LIKE '%mechatronic%'
+OR salary LIKE '%mechatronic%'
+OR startDate LIKE '%mechatronic%'
+OR endDate LIKE '%mechatronic%'
+OR function LIKE '%mechatronic%'
+OR description LIKE '%mechatronic%'
+OR requirements LIKE '%mechatronic%'
+OR preferredDisciplines LIKE '%mechatronic%'
+OR applicationDeadline LIKE '%mechatronic%'
+OR applicationMethod LIKE '%mechatronic%'
+OR applicationReceiptProcedure LIKE '%mechatronic%'
+OR applicationDetails LIKE '%mechatronic%';
+```
+
+Which companies posted the most number of jobs?
+
+```{.sql .interactive .hr}
+SELECT company, COUNT(*) as num_postings
+FROM JobPosting
+GROUP BY company
+ORDER BY num_postings DESC;
+```
+
+What locations are posted jobs most frequently located at?
+
+```{.sql .interactive .hr}
+SELECT location, COUNT(*) as num_postings
+FROM JobPosting
+GROUP BY location
+ORDER BY num_postings DESC;
+```
+
+***More to come in part 2!***
+
 ## Next Steps
 
-Next up is the fun part: analyzing the data to generate some insights on what jobs are posted. Including...
+Next up[^part2] is the fun part: analyzing the data to generate some insights on what jobs are posted. Including...
+
+[^part2]: in part 2 of this series!
 
 - How many jobs are posted for chemical/mechanical/mineral/... engineers?
 - During what periods are the bulk of jobs posted?
 - When do specific companies post most/all their jobs?
 - How many jobs are reposted[^yeahidkaboutthiseither], and which ones?
-- and more! Feel free to suggest exploration ideas in the comments below.
+- ...and more! Feel free to suggest exploration ideas in the comments below.
 
-[^yeahidkaboutthiseither]: Yeah, I was a bit confused at seeing some of the same jobs reposted up to several weeks after the original, it's not commonplace but it did occur for a few dozen jobs (I imagine for those where the position was left unfilled after some initial batch of students applied and it was reposted to reinvigorate interest).
-
-====================
-This isn't the first time archiving job postings has come across my mind. In my first year of university, I was *pretty* bewildered at just how many links I had access to with resources of all kinds (now that I've been able to actually look through many of them, I realize that they're not all quite as useful as one would hope). Like any enterprising student, there was one concern that persisted above all: how the heck can I get a job?
-
-Thankfully for all of us UofT students, the University of Toronto has it's university-wide job board (and much more) in the form of....
-
-AUTHOR'S NOTE: cut this short, discussion for a later date
-====================
+[^yeahidkaboutthiseither]: This is something the Engineering Career Centre (ECC) people who run the PEY Co-op job board don't tell you, employers can *"repost"* a job with the same job id (usually several weeks) after the original which makes it'll show up under `New Posting Since Last Login` even if you've already viewed (and even though it's technically still the same single job posting). It's not commonplace but it did occur for a few dozen jobs (I imagine for those where the position was left unfilled after some initial batch of students applied and it was reposted to reinvigorate interest).

@@ -6,6 +6,7 @@ include-after-body: div-giscus.html
 
 # Enable banner style title blocks
 title-block-banner: "#eeeeee"
+highlight-style: github
 
 # options specified here will apply to all posts in this folder
 navbar:
