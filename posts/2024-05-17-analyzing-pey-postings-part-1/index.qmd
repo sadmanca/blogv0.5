@@ -1,6 +1,6 @@
 ---
-title: "Analyzing UofT PEY Co-op Job Postings - Part 1: Scraping Job Posting Data"
-description: "Collecting unstructured data from the PEY Job Portal & pipelining it to a SQLite DB"
+title: "Analyzing UofT PEY Co-op Job Postings (2023-2024) - Part 1: Scraping Job Board Data"
+description: "Collecting unstructured data on ~2k job postings from UofT's PEY Co-op job board & pipelining it to a single SQLite DB less than 10MB in size"
 date: "2024-05-17"
 categories: ["Writing"]
 format:
@@ -12,6 +12,10 @@ embed-resources: true
 filters:
   - quarto
   - line-highlight
+  - interactive-sql
+databases:
+  - name: hr
+    path: "https://raw.githubusercontent.com/shafayetShafee/interactive-sql/main/hr.sql"
 jupyter: python3
 
 reference-location: margin
@@ -19,7 +23,9 @@ citation-location: margin
 image: resources/pey-part1.svg
 ---
 
-Whether you're a new applicant to University of Toronto (UofT) Engineering/CS or someone who's going through their first, second, or even third year, you've probably been curious at one point or another about what jobs are actually posted on the much acclaimed PEY Co-op job board[^qns]. Well, as a computer engineering student at UofT who's just finished their third year (and consequently have been able to access the portal for these past two semesters), I thought it would be a good idea to do my own little data collection on the topic, along with maybe some analysis on reoccurring patterns[^quirks] (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (hundreds of jobs, posted across several months) so that future PEY Co-op students can get a better idea of what they can expect from the portal (in a nutshell: better than you'd think, although it depends on who you exactly are).
+Whether you're a new applicant to University of Toronto (UofT) Engineering/CS or someone who's going through their first, second, or even third year, you've probably been curious at one point or another about what jobs are actually posted on the much acclaimed PEY Co-op job board[^qns]. 
+
+Well, as a computer engineering student at UofT who's just finished their third year (and consequently have been able to access the portal for these past two semesters), I thought it would be a good idea to do my own little data collection on the topic, along with maybe some analysis on reoccurring patterns[^quirks] (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (hundreds of jobs, posted across several months) so that future PEY Co-op students can get a better idea of what they can expect from the portal (in a nutshell: better than you'd think, although it depends on who you exactly are).
 
 [^qns]: Especially if you're not in the software industry, which for better or worse make up >70% of the jobs on the portal.
 
@@ -27,45 +33,71 @@ Whether you're a new applicant to University of Toronto (UofT) Engineering/CS or
 
 # Scraping Job Posting Data
 
-The UofT PEY Co-op job board itself is located behind a login portal at <https://www.uoftengcareerportal.ca/myAccount/internship/postings.htm>. To get in, you need to a) be a student at UofT (to have valid login credentials); b) be enrolled in the PEY Co-op program; and c) be registered to start your 12-16 month internship sometime between May and September following your current year (which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal). As an engineering student who's just finished their third year, I've had privileged access for 8 months and counting, and I've been able to save data on quite the number[^all] of job postings posted on the portal (but more on that later).
+The UofT PEY Co-op job board itself is located behind a login portal at [uoftengcareerportal.ca/myAccount/internship/postings.htm](https://uoftengcareerportal.ca/myAccount/internship/postings.htm). To get in, you need to a) be a student at UofT (to have valid login credentials); b) be enrolled in the PEY Co-op program; and c) be registered to start your 12-16 month internship sometime between May and September following your current year (which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal). As an engineering student who's just finished their third year[^acc], I've had privileged access for 8 months and counting, and I've been able to save data on quite the number[^all] of job postings posted on the portal (but more on that later).
 
-[^acc] Well, by the time you're reading this, I've finished my third year for quite some time.
+[^acc]: Well, by the time you're reading this, it'll have been a while since I finished my third year.
 
-[^all] And by "quite the number", I mean every single job posted since I've had access.
+[^all]: And by "quite the number", I mean every single job posted since I've had access.
 
 ## What you can expect from the job board
 
-The landing page for the PEY Co-op job board hosts the same look as the one for all the cross-institutional job boards at UofT's [CLNx](https://clnx.utoronto.ca/myAccount/dashboard.htm) and uses the same organization of elements and processes for browsing, searching for, and applying to job postings, so if you're a UofT student who's used CLNx in the past[^eg-ws] you already know what it's like to experience using the PEY job board.
+The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.htm)[^access] for the PEY Co-op job board hosts the same look as the one for all the cross-institutional job boards at UofT's [CLNx](https://clnx.utoronto.ca/myAccount/dashboard.htm) and uses the same organization of elements and processes for browsing, searching for, and applying to job postings, so if you're a UofT student who's used CLNx in the past[^eg-ws] you already know what it's like to experience using the PEY job board.
 
 [^eg-ws]: e.g. for applying to work study positions.
 
-::: {.column-margin}
-![The advanced search options available after clicking on `Search Job Postings`. Is *identical* to the job boards on CLNx.](resources/pey-advanced-search.jpg)
+[^access]: Note: you need to sign in using your UofT credentials before you can access this.
 
-![Viewed jobs (after clicking on `Viewed`). Also *identical* to the job boards on CLNx.](resources/pey-viewed.jpg)
+::: {.column-page}
+
+:::: {.columns}
+
+::: {.column width="53%"}
+![The PEY Co-op job board landing page (`Job Postings`).](resources/pey-landing-page.jpg){width=700}
+
+![Viewed jobs (`Viewed`). Note: the page shows that I've viewed 2164 jobs on the portal, even though there were only ~1.8k PEY Co-op positions ever posted (as you'll learn later on). ***Why's that?*** Well, the remaining ~300 jobs are actually from when the portal opened up for my cohort's [PEY Co-op **summer** work-term (12-16 weeks).](https://engineeringcareers.utoronto.ca/pey-co-op-overview/)](resources/pey-viewed.jpg){width=700}
 :::
 
-![The PEY Co-op job board landing page. Note: you need to sign in using your UofT credentials before you can access this. Source: <https://www.uoftengcareerportal.ca/myAccount/internship/postings.htm>](resources/pey-landing-page.jpg)
+::: {.column width="2%"}
+
+:::
+
+::: {.column width="45%"}
+![Advanced search options (`Search Job Postings`).](resources/pey-advanced-search.jpg){width=700}
+:::
+
+::::
+
+:::
 
 ### A sample job posting
 
-Your average PEY job posting looks like the following:
+Your average PEY job postings look like the below. *Note:* The design on the left was used for a couple years, until the most recent redesign in late 2023 (which took place halfway through my fall semester of third year). If you're an upcoming PEY Co-op student, job postings should look like the right for you.
 
-::: {.column-body-outset}
-::: {layout-ncol=2}
-![Old design[^olddesign] for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort in 2023.](resources/pey-old-posting.jpg)
+::: {.column-page}
 
-[^olddesign]: This was the design used for a couple years, until the most recent redesign in late 2023 (which took place halfway through my fall semester of third year).
+:::: {.columns}
 
-![Current design for PEY job postings. One of the most recent jobs posted at the time of writing.](resources/pey-sample-posting.jpg)
-:::
+::: {.column width="58%"}
+![Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: `ML Developer - Software Automation & Developer Infrastructure` @ `Cerebras`](resources/pey-old-posting.jpg){width=600}
 :::
 
-Nothing much to look at, just some basic tables with information about the job and the company, which thankfully should be simple to parse.
+::: {.column width="2%"}
+
+:::
+
+::: {.column width="40%"}
+![Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: `Software Developer Intern` @ `Geotab`](resources/pey-sample-posting.jpg){width=600}
+:::
+
+::::
+
+:::
+
+Nothing much to look at, just some basic tables with information about the job and the company, which thankfully are simple to parse.
 
 ## Getting the posting date for jobs
 
-One thing that's important to me since the very start of this project is making sure that the timestamps of job postings are available to view. As someone who took a few months before I landed a position that I was really satisified with, there were times where I felt a bit apprehensive at turning down offers for roles that I thought were fine but didn't feel excited about. I had no data beyond anecdotes from upper years about what's posted over the course of the fall and winter semesters, and so I couldn't really predict whether that dream role I had in mind was just a couple days from being posted (or whether jobs would start drying up so I should stick with whatever I had at that point in time), which is why I hope that at least one of the things this project of mine can provide is some reassurance to future PEY students about what jobs are posted and when[^but].
+One thing that's been important to me since the very start of this project is making sure that the timestamps of job postings are available to view. As someone who took a few months before I landed a position that I was really satisified with, there were times where I felt a bit apprehensive at turning down offers for roles that I thought were fine but didn't feel excited about. I had no data beyond anecdotes from upper years about what's posted over the course of the fall and winter semesters, and so I couldn't really predict whether that dream role I had in mind was just a couple days from being posted (or whether jobs would start drying up so I should stick with whatever I had at that point in time), which is why I hope that at least one of the things this project of mine can provide is some reassurance to future PEY students about what jobs are posted and when[^but].
 
 [^but]: One thing to keep in mind: every year is different, and just because some company posted some number of jobs at some point in time doesn't mean that they'll do it again next year. Of course, it also doesn't mean that they won't do it again, so make sure your takeaways from the data are taken with a grain of salt.
 
@@ -81,14 +113,15 @@ Which is why that's exactly what I've done for the past 243 days (and counting).
 
 And it's all thanks to Gildas Lormeau's[^gildas] [SingleFile web extension](https://github.com/gildas-lormeau/SingleFile)[^cli], which allows for saving a complete web page into a single HTML file (unlike Chrome[^chrome]). In addition (and rather importantly), the SingleFile extension allows for saving pages for *all tabs in the current window* (this is important for making the whole archival process a not-headache).
 
-[^gildas]: https://github.com/gildas-lormeau
+[^gildas]: [github.com/gildas-lormeau](https://github.com/gildas-lormeau)
 
 [^cli]: While there's also a CLI tool available, the tricky navigation for the PEY job board website means that manually navigating to pages & then saving them using the extension is a lot easier.
 
 [^chrome]: Chrome and virtually all other browsers have a slightly more complicated setup for saving pages which makes organizing files for saved pages slightly less elegant compared to dealing with just a single file via SingleFile: when you press `Ctrl+S` on a page, it doesn't just save that page's HTML file but also a folder containing all of the media from the page (which, given that none of the job postings contain images, is just one more thing to have to delete).
 
-By CTRL-clicking on every single job posting shown behind `New Posting Since Last Login` (so that every new posting opens on a new tab) and then using the SingleFile extension to save the page each tab in one go[^ext], I'm able to condense the whole process of saving new postings for the day to just 1-2 minutes. Put each day's postings into a timestamped folder (made faster thanks to a handy AutoHotKey script that's always a keyboard shortcut away), which itself goes into a big folder on my local computer of all PEY job postings collected thus far, and I've got myself data on almost 2000 job postings just waiting to be analyzed for some insights.
+By `CTRL-click`ing on every single job posting shown behind `New Posting Since Last Login` (so that every new posting opens on a new tab) and then using the SingleFile extension to save the page each tab in one go[^ext], I'm able to condense the whole process of saving new postings for the day to just 1-2 minutes. Put each day's postings into a timestamped folder (made faster thanks to a handy AutoHotKey script that's always a keyboard shortcut away), which itself goes into a big folder on my local computer of all PEY job postings collected thus far, and I've got myself data on almost 2k job postings just waiting to be analyzed for some insights.
 
+::: {#fig-dir}
 ```
 📁PEY POSTINGS ARCHIVE/
 ├── 📁2023-09-17_20-14-10/
@@ -116,22 +149,24 @@ By CTRL-clicking on every single job posting shown behind `New Posting Since Las
 └── 📁2024-05-17_16-25-26/
 ```
 
-<<<marginnote about how there have been many changes over time, including the ecc website redesign, my changing of how files are named in singlefile by default>>>
+A snapshot of my local directory structure with HTML pages for saved job postings. You might notice that the naming convention for HTML files are different across the 3 folders shown. That's because my file naming system did indeed change 3 times over the course of my two semesters, including due to the job board redesign and my reconfiguring of options for SingleFile.
+
+:::
 
 [^ext]: Using the `Save all tabs` option under the SingleFile extension.
 
 ### Why not write a script to automate saving postings?
 
-Is it possible to automate the whole process of saving data for job postings? Technically, yes, it's absolutely feasible, but given how easy it is manually save data for job postings in a minute or two for every couple hundred of jobs (with the assistance of a few scripts to make the CTRL-clicking a lot faster), it's just not worth the time to make the routine task more efficient[^xkcd1] (I'd be spending more time than I'd save, as any XKCD enjoyer can relate to[^xkcd2]).
+Is it possible to automate the whole process of saving data for job postings? Technically, yes, it's absolutely feasible, but given how easy it is manually save data for job postings in a minute or two for every couple hundred of jobs (with the assistance of a few scripts to make the `CTRL-click`ing a lot faster), it's just not worth the time to make the routine task more efficient[^xkcd1] (I'd be spending more time than I'd save, as any XKCD enjoyer can relate to[^xkcd2]).
 
-[^xkcd1]: [Automation](https://imgs.xkcd.com/comics/is_it_worth_the_time.png)
-[^xkcd2]: [Is It Worth the Time?](https://imgs.xkcd.com/comics/automation.png)
+[^xkcd1]: [![xkcd: "Automation"](https://imgs.xkcd.com/comics/is_it_worth_the_time.png)](https://xkcd.com/1205/)
+[^xkcd2]: [![xkcd: "Is It Worth the Time?"](https://imgs.xkcd.com/comics/automation.png)](https://xkcd.com/1319/)
 
 # Loading job posting data to a database
 
 HTML is fine for temporary storage purposes[^issok], but I need something that will allow me to view and analyze the data in a fast, efficient, and easy-to-use manner. Enter the underrated gem of database technologies: SQLite.
 
-[^issok]: Despite a large portion of the saved HTML files conssiting of useless space in lines of JavaScript, CSS, and HTML that have nothing to do with the data that counts, it's just not worth the time investment for me to parse through every file and remove the clutter since all the saved job postings for a year only take up a couple hundred MB.
+[^issok]: Despite a large portion of the saved HTML files consisting of useless space in lines of JavaScript, CSS, and HTML that have nothing to do with the data that counts, it's just not worth the time investment for me to parse through every file and remove the clutter since all the saved job postings for a year only take up a couple hundred MB.
 
 Now, I've never used SQLite before[^psql], but thanks to the [`sqlite3` documentation for Python](https://docs.python.org/3/library/sqlite3.html) it looks like I'll be right-at-home as someone who's used `psycopg2` in the past[^whypy].
 
@@ -149,9 +184,11 @@ The HTML code for each job posting page doesn't have the best formatting[^emptyl
 
 [^emptylines]:
 
-  The page Nanoleaf position above has 3506 empty lines with only 809 lines of actual HTML/CSS/JS code, and the HTML that *does* exist isn't exactly the most pleasing to read:
+  The page for the Cerebras position above has 3506 empty lines with only 809 lines dedicated to actual code, and the HTML code on non-empty lines isn't exactly the most pleasing to read:
 
-    ```{.html filename="Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html"}
+    ```{.html filename="sample_job.html"}
+    <!-- Job ID_ _ 43628 UofT Engineering Career Centre - MyAccount - Co-op & Experience Programs - Job Postings (9_18_2023 12_52_04 AM).html --> 
+    
     <div class=orbisModuleHeader>
     <div class=row-fluid>
     <div class=span2>
@@ -178,6 +215,8 @@ The HTML code for each job posting page doesn't have the best formatting[^emptyl
     <li>
     <a href=javascript:void(0)><i class=icon-chevron-left></i>Back to Overview</a>
     </li>
+    
+    <!-- ... -->
     ```
 
 ```{.python filename="parse.py"}
@@ -221,10 +260,10 @@ if __name__ == "__main__":
 ```
 
 ::: {.column-page}
-::: columns
+:::: columns
 ::: {.column width="40%"}
 
-![](resources/pey-old-posting.jpg){height=50%}
+![](resources/pey-old-posting.jpg){width=500}
 :::
 
 ::: {.column width="60%"}
@@ -288,7 +327,7 @@ Length of Workterm:: FLEXIBLE PEY Co-op: 12-16 months (range)
 ```
 
 :::
-:::
+::::
 :::
 
 ### Finetuning data extraction
@@ -310,7 +349,7 @@ import re #<<
 
 def extract_job_id_from_html(soup): #<<
     # try to find job ID in a <h1> tag with the specific class #<<
-    header_tag = soup.find('h1', class_='h3 dashboard-header__profile-information-name mobile--small-font #<< color--font--white margin--b--s')
+    header_tag = soup.find('h1', class_='h3 dashboard-header__profile-information-name mobile--small-font color--font--white margin--b--s') #<<
     if header_tag: #<<
         header_text = header_tag.get_text(strip=True) #<<
         match = re.match(r'^(\d+)', header_text) #<<
@@ -385,7 +424,7 @@ Most importantly, SQLite is serverless (unlike PostgreSQL or MySQL), which saves
 
 [^especially]: Especially since `sqlite3` is built into Python's standard library!
 
-### Pipelining data from >1k HTML files to a single SQLite DB
+### Pipelining data from ~2k HTML files to a single SQLite DB
 
 Using SQLite with Python via `sqlite3` is simple enough[^tutorial]. All I need to do is add some additional code for extracting the job posting date from the parent folder for each job posting's HTML page and for iterating across every subfolder for PEY job postings on my local computer, as well as draft up a schema for the SQLite DB and write some code for piping data from Python dictionaries to the DB file.
 
@@ -445,7 +484,7 @@ if __name__ == "__main__":
 
 #### Parsing to `.db`
 
-Finally, with some additional code for properly parsing through all subfolders in my local directory and setting the `postingDate` value based on the folder name[^timestamped] for each file, I can create transform the entire dataset of >1.8k job postings into a single `.db` file under 10Mb in size in less than 2 min[^onaharddrive].
+Finally, with some additional code for properly parsing through all subfolders in my local directory and setting the `postingDate` value based on the folder name[^timestamped] for each file, I can create transform the entire dataset of >1.8k job postings into a single `.db` file under 10MB in size in less than 2 min[^onaharddrive].
 
 ```{.python filename="parse_to_db.py"}
 import argparse
@@ -623,6 +662,10 @@ if __name__ == "__main__":
 ## Results
 
 And so we have it: a single database file storing every single job posted on the UofT PEY Co-op job board for 2T5s (from 2023 to 2024). You can play around with querying the data below, or download the SQLite `.db` file at the link below.
+
+```{.sql .interactive .hr}
+select * from regions;
+```
 
 ## Next Steps
 
