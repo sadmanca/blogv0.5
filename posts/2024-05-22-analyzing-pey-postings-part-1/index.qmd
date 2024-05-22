@@ -35,6 +35,12 @@ Well, as a computer engineering student at UofT who's just finished their third 
 
 [^quirks]: There's also a couple of quirks that you might not know about if you don't already have access to the portal.
 
+**For a sneak peek at the data, try running the SQL query below.**
+
+```{.sql .interactive .job_postings}
+SELECT * FROM JobPostings LIMIT 5;
+```
+
 # Scraping job posting data
 
 The UofT PEY Co-op job board itself is located behind a login portal at [uoftengcareerportal.ca/myAccount/internship/postings.htm](https://uoftengcareerportal.ca/myAccount/internship/postings.htm). To get in, you need to a) be a student at UofT (to have valid login credentials); b) be enrolled in the PEY Co-op program; and c) be registered to start your 12-16 month internship sometime between May and September following your current year (which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal). As an engineering student who's just finished their third year[^acc], I've had privileged access for 8 months and counting, and I've been able to save data on quite the number[^all] of job postings posted on the portal (but more on that later).
@@ -58,7 +64,7 @@ The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.
 ::: {.column width="52%"}
 ![The PEY Co-op job board landing page (`Job Postings`).](resources/pey-landing-page.jpg){width=500}
 
-![Viewed jobs (`Viewed`). Note: the page shows that I've viewed 2164 jobs on the portal, even though there were only ~1.8k PEY Co-op positions ever posted (as you'll learn later on). ***Why's that?*** Well, the remaining ~300 jobs are actually from when the portal opened up for my cohort's [PEY Co-op **summer** work-term (12-16 weeks)](https://engineeringcareers.utoronto.ca/pey-co-op-overview/). I'll leave a dive into summer job postings for sometime in the future.](resources/pey-viewed.jpg){width=700}
+![Viewed jobs (`Viewed`). Note: the page shows that I've viewed 2164 jobs on the portal, even though there were only ~1.8k PEY Co-op positions ever posted (as you'll learn later on). ***Why's that?*** Well, the remaining ~300 jobs are actually from when the portal opened up for my cohort's [PEY Co-op **summer** work-term (12-16 weeks)](https://engineeringcareers.utoronto.ca/pey-co-op-overview/). I'll leave a post diving into summer job postings for sometime in the future.](resources/pey-viewed.jpg){width=700}
 :::
 
 ::: {.column width="2%"}
@@ -82,7 +88,7 @@ Your average PEY job postings look like the below. *Note:* The design on the lef
 :::: {.columns}
 
 ::: {.column width="56%"}
-![Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: `ML Developer - Software Automation & Developer Infrastructure` @ `Cerebras`](resources/pey-old-posting.jpg){width=500}
+![Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: `ML Developer - Software Automation & Developer Infrastructure` @ `Cerebras`](resources/pey-old-posting.jpg){width=550}
 :::
 
 ::: {.column width="1%"}
@@ -90,7 +96,7 @@ Your average PEY job postings look like the below. *Note:* The design on the lef
 :::
 
 ::: {.column width="43%"}
-![Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: `Software Developer Intern` @ `Geotab`](resources/pey-sample-posting.jpg){width=550}
+![Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: `Software Developer Intern` @ `Geotab`](resources/pey-sample-posting.jpg){width=500}
 :::
 
 ::::
@@ -680,8 +686,6 @@ if __name__ == "__main__":
 ```
 :::
 
-![Parsing through the dataset](https://raw.githubusercontent.com/tqdm/tqdm/blob/74722959a8626fd2057be03e14dcf899c25a3fd5/images/tqdm.gif)
-
 [^timestamped]: e.g. `📁2023-09-17_20-14-10`; easily achievable thanks to [github.com/sadmanca/ahk-scripts/blob/master/keys.ahk](https://github.com/sadmanca/ahk-scripts/blob/master/keys.ahk#L54)
 
 # Viewing the data
@@ -720,7 +724,6 @@ GROUP BY location
 ORDER BY num_postings DESC;
 ```
 
-
 ```{=html}
 <p style="margin-bottom:5pt;"></p>
 ```
@@ -730,13 +733,13 @@ ORDER BY num_postings DESC;
 ```{.sql .interactive .job_postings}
 SELECT COUNT(*) AS num_mech_postings
 FROM JobPosting
-WHERE title LIKE '%mechatronic%'
-OR company LIKE '%mechatronic%'
-OR companyDivision LIKE '%mechatronic%'
-OR function LIKE '%mechatronic%'
-OR description LIKE '%mechatronic%'
-OR requirements LIKE '%mechatronic%'
-OR preferredDisciplines LIKE '%mechatronic%';
+    WHERE title LIKE '%mechatronic%'
+    OR company LIKE '%mechatronic%'
+    OR companyDivision LIKE '%mechatronic%'
+    OR function LIKE '%mechatronic%'
+    OR description LIKE '%mechatronic%'
+    OR requirements LIKE '%mechatronic%'
+    OR preferredDisciplines LIKE '%mechatronic%';
 ```
 
 ```{=html}
@@ -751,20 +754,10 @@ FROM JobPosting
     WHERE title LIKE '%mechatronic%'
     OR company LIKE '%mechatronic%'
     OR companyDivision LIKE '%mechatronic%'
-    OR companyWebsite LIKE '%mechatronic%'
-    OR location LIKE '%mechatronic%'
-    OR locationType LIKE '%mechatronic%'
-    OR salary LIKE '%mechatronic%'
-    OR startDate LIKE '%mechatronic%'
-    OR endDate LIKE '%mechatronic%'
     OR function LIKE '%mechatronic%'
     OR description LIKE '%mechatronic%'
     OR requirements LIKE '%mechatronic%'
     OR preferredDisciplines LIKE '%mechatronic%'
-    OR applicationDeadline LIKE '%mechatronic%'
-    OR applicationMethod LIKE '%mechatronic%'
-    OR applicationReceiptProcedure LIKE '%mechatronic%'
-    OR applicationDetails LIKE '%mechatronic%'
 LIMIT 1;
 ```
 
