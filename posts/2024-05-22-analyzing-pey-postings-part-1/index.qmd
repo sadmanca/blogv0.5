@@ -8,14 +8,14 @@ format:
     smooth-scroll: true
     code-tools: true
     code-copy: hover
-embed-resources: true
+embed-resources: false
 filters:
   - quarto
   - line-highlight
   - interactive-sql
 databases:
-  - name: hr
-    path: "https://raw.githubusercontent.com/shafayetShafee/interactive-sql/main/hr.sql"
+  - name: job_postings
+    path: "https://raw.githubusercontent.com/sadmanca/uoft-pey-coop-job-postings/raw/job_postings.sql"
 jupyter: python3
 
 reference-location: margin
@@ -55,13 +55,17 @@ The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.
 
 :::: {.columns}
 
-::: {.column width="53%"}
+::: {.column width="52%"}
 ![The PEY Co-op job board landing page (`Job Postings`).](resources/pey-landing-page.jpg){width=500}
 
-![Viewed jobs (`Viewed`). Note: the page shows that I've viewed 2164 jobs on the portal, even though there were only ~1.8k PEY Co-op positions ever posted (as you'll learn later on). ***Why's that?*** Well, the remaining ~300 jobs are actually from when the portal opened up for my cohort's [PEY Co-op **summer** work-term (12-16 weeks)](https://engineeringcareers.utoronto.ca/pey-co-op-overview/)](resources/pey-viewed.jpg). I'll leave a dive into summer job postings for sometime in the future.{width=700}
+![Viewed jobs (`Viewed`). Note: the page shows that I've viewed 2164 jobs on the portal, even though there were only ~1.8k PEY Co-op positions ever posted (as you'll learn later on). ***Why's that?*** Well, the remaining ~300 jobs are actually from when the portal opened up for my cohort's [PEY Co-op **summer** work-term (12-16 weeks)](https://engineeringcareers.utoronto.ca/pey-co-op-overview/). I'll leave a dive into summer job postings for sometime in the future.](resources/pey-viewed.jpg){width=700}
 :::
 
-::: {.column width="45%"}
+::: {.column width="2%"}
+
+:::
+
+::: {.column width="46%"}
 ![Advanced search options (`Search Job Postings`).](resources/pey-advanced-search.jpg){width=800}
 :::
 
@@ -77,7 +81,7 @@ Your average PEY job postings look like the below. *Note:* The design on the lef
 
 :::: {.columns}
 
-::: {.column width="53%"}
+::: {.column width="56%"}
 ![Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: `ML Developer - Software Automation & Developer Infrastructure` @ `Cerebras`](resources/pey-old-posting.jpg){width=500}
 :::
 
@@ -85,8 +89,8 @@ Your average PEY job postings look like the below. *Note:* The design on the lef
 
 :::
 
-::: {.column width="46%"}
-![Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: `Software Developer Intern` @ `Geotab`](resources/pey-sample-posting.jpg){width=650}
+::: {.column width="43%"}
+![Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: `Software Developer Intern` @ `Geotab`](resources/pey-sample-posting.jpg){width=550}
 :::
 
 ::::
@@ -682,69 +686,104 @@ if __name__ == "__main__":
 
 # Viewing the data
 
-And so we have it: a single database file storing every single job posted on the UofT PEY Co-op job board for 2T5s[^2t5] (from 2023 to 2024). You can play around with querying the data below, or download the SQLite `.db` file from the latest release at [github.com/sadmanca/uoft-pey-coop-job-postings-analysis](https://github.com/sadmanca/uoft-pey-coop-job-postings-analysis) and play around with it yourself.
+And so we have it: a single database file storing every single job posted on the UofT PEY Co-op job board for 2T5s[^2t5] (from 2023 to 2024). You can play around with querying the data below[^anotebaout], or download the SQLite `.db` file from the latest release at [github.com/sadmanca/uoft-pey-coop-job-postings](https://github.com/sadmanca/uoft-pey-coop-job-postings).
 
 [^2t5]: UofT Engineering students and alumni often include their graduation year after their name to denote their class. If you start first year in 2021, you will be part of the class of 2025, denoted as “2T5” (pronounced “two-tee-five”).
 
-```{.sql .interactive .hr}
-select * from regions;
+[^anotebaout]: I've built-in a SQL view called `JobPostings` (the table with the actual data is called `JobPosting`, without the "s") that excludes some of the columns with very long values (e.g. `description`, `requirements`, `preferredDisciplines`, `applicationDetails`) to make table formatting look a bit better if you're running `SELECT *` queries. To run queries with the excluded columns, use the `JobPosting` table instead.
+
+```{.sql .interactive .job_postings}
+SELECT * FROM JobPostings LIMIT 5;
 ```
 
-## Sample queries
+## Sample Queries
 
-How many job postings are there for mechatronics-adjacent positions?
+### Which companies posted the most number of jobs?
 
-```{.sql .interactive .hr}
-SELECT * FROM JobPosting
-WHERE title LIKE '%mechatronic%'
-OR company LIKE '%mechatronic%'
-OR companyDivision LIKE '%mechatronic%'
-OR companyWebsite LIKE '%mechatronic%'
-OR location LIKE '%mechatronic%'
-OR locationType LIKE '%mechatronic%'
-OR salary LIKE '%mechatronic%'
-OR startDate LIKE '%mechatronic%'
-OR endDate LIKE '%mechatronic%'
-OR function LIKE '%mechatronic%'
-OR description LIKE '%mechatronic%'
-OR requirements LIKE '%mechatronic%'
-OR preferredDisciplines LIKE '%mechatronic%'
-OR applicationDeadline LIKE '%mechatronic%'
-OR applicationMethod LIKE '%mechatronic%'
-OR applicationReceiptProcedure LIKE '%mechatronic%'
-OR applicationDetails LIKE '%mechatronic%';
-```
-
-Which companies posted the most number of jobs?
-
-```{.sql .interactive .hr}
+```{.sql .interactive .job_postings}
 SELECT company, COUNT(*) as num_postings
 FROM JobPosting
 GROUP BY company
 ORDER BY num_postings DESC;
 ```
 
-What locations are posted jobs most frequently located at?
+```{=html}
+<p style="margin-bottom:5pt;"></p>
+```
 
-```{.sql .interactive .hr}
+### Where are most jobs located?
+
+```{.sql .interactive .job_postings}
 SELECT location, COUNT(*) as num_postings
 FROM JobPosting
 GROUP BY location
 ORDER BY num_postings DESC;
 ```
 
+
+```{=html}
+<p style="margin-bottom:5pt;"></p>
+```
+
+### How many job postings are there for mechatronics-adjacent positions?
+
+```{.sql .interactive .job_postings}
+SELECT COUNT(*) AS num_mech_postings
+FROM JobPosting
+WHERE title LIKE '%mechatronic%'
+OR company LIKE '%mechatronic%'
+OR companyDivision LIKE '%mechatronic%'
+OR function LIKE '%mechatronic%'
+OR description LIKE '%mechatronic%'
+OR requirements LIKE '%mechatronic%'
+OR preferredDisciplines LIKE '%mechatronic%';
+```
+
+```{=html}
+<p style="margin-bottom:5pt;"></p>
+```
+
+### What does a job for a mechatronics-adjacent position look like?
+
+```{.sql .interactive .job_postings}
+SELECT *
+FROM JobPosting
+    WHERE title LIKE '%mechatronic%'
+    OR company LIKE '%mechatronic%'
+    OR companyDivision LIKE '%mechatronic%'
+    OR companyWebsite LIKE '%mechatronic%'
+    OR location LIKE '%mechatronic%'
+    OR locationType LIKE '%mechatronic%'
+    OR salary LIKE '%mechatronic%'
+    OR startDate LIKE '%mechatronic%'
+    OR endDate LIKE '%mechatronic%'
+    OR function LIKE '%mechatronic%'
+    OR description LIKE '%mechatronic%'
+    OR requirements LIKE '%mechatronic%'
+    OR preferredDisciplines LIKE '%mechatronic%'
+    OR applicationDeadline LIKE '%mechatronic%'
+    OR applicationMethod LIKE '%mechatronic%'
+    OR applicationReceiptProcedure LIKE '%mechatronic%'
+    OR applicationDetails LIKE '%mechatronic%'
+LIMIT 1;
+```
+
 ***More to come in part 2!***
 
 ## Next Steps
 
-Next up[^part2] is the fun part: analyzing the data to generate some insights on what jobs are posted. Including...
+You'll notice that the data still needs some cleaning[^example], which is fine, should be fairly simple to do by manually parsing through the dataset and aggregating similar values.
+
+[^example]: e.g. `Toronto` and `Toronto, ON` are present as two distinct locations, when really they should just be one.
+
+But after some basic data cleaning[^part2] is the fun part: **analyzing the data to generate some insights on posted jobs**, including...
 
 [^part2]: in part 2 of this series!
 
-- How many jobs are posted for chemical/mechanical/mineral/... engineers?
-- During what periods are the bulk of jobs posted?
-- When do specific companies post most/all their jobs?
-- How many jobs are reposted[^yeahidkaboutthiseither], and which ones?
+- *How many jobs are posted for chemical/mechanical/mineral/... engineers?*
+- *During what periods are the bulk of jobs posted?*
+- *When do specific companies post most/all their jobs?*
+- *How many jobs are reposted[^yeahidkaboutthiseither], and which ones?*
 - ...and more! Feel free to suggest exploration ideas in the comments below.
 
-[^yeahidkaboutthiseither]: This is something the Engineering Career Centre (ECC) people who run the PEY Co-op job board don't tell you, employers can *"repost"* a job with the same job id (usually several weeks) after the original which makes it'll show up under `New Posting Since Last Login` even if you've already viewed (and even though it's technically still the same single job posting). It's not commonplace but it did occur for a few dozen jobs (I imagine for those where the position was left unfilled after some initial batch of students applied and it was reposted to reinvigorate interest).
+[^yeahidkaboutthiseither]: Something the Engineering Career Centre (ECC) people who run the PEY Co-op job board don't inform you about ahead of time, employers can *"repost"* a job with the same job id (usually several weeks) after the original which makes it'll show up under `New Posting Since Last Login` even if you've already viewed (and even though it's technically still the same single job posting). It's not commonplace but it did occur for a few dozen jobs (I imagine for those where the position was left unfilled after some initial batch of students applied and it was reposted to reinvigorate interest).

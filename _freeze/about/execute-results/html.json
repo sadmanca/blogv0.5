@@ -1,0 +1,12 @@
+{
+  "hash": "4fcf7818b60b1c07ebbdd3c335bc0919",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Sadman Hossain\nimage: profile.jpg\nabout:\n  template: solana\n  links:\n    - icon: linkedin\n      text: sadmanca\n      href: 'https://linkedin.com/in/sadmanca'\n    - icon: github\n      text: sadmanca\n      href: 'https://github.com/sadmanca'\n    - icon: twitter\n      text: sadmanca\n      href: 'https://twitter.com/sadmanca'\ninclude-after-body:\n  text: |\n    <script src=\"https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js\"></script>\n    <script>\n        var snowflakes = new Snowflakes({\n            color: '#5ECDEF',\n            count: 40,\n            minOpacity: 0.1,\n            maxOpacity: 0.5,\n            minSize: 7,\n            maxSize: 17,\n            speed: 0.15,\n            wind: true});\n    </script>\n---\n\n:::{#hero-heading}\n\nSadman Hossain is a 3rd year computer engineering student at the Univeristy of Toronto. When not creating more AutoHotkey shortcuts for automating the mouse away, Sadman enjoys binge-reading really long sci-fi/apocalyptic/fantasy novels ([tracked on Goodreads](https://www.goodreads.com/review/list/152185079-sadman-hossain)).\n\n```{.python filename=\"schedule.py\"}\nif coffee.empty():\n    while not coding:\n        sleep(900)  # Nap time for code monkeys\n        if wake_up_with_idea():\n            break\n    code.write(bug)\n    coffee.refill()\nelse:\n    print(\"☕ Error: Too much coffee, not enough code!\")\n```\n\n:::\n\n",
+    "supporting": [
+      "about_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
