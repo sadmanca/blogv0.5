@@ -75,3 +75,5 @@ format:
     code-tools: true
     code-copy: hover
     code-overflow: wrap
+    code-line-numbers: false
+    code-annotations: below
