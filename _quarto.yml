@@ -72,7 +72,7 @@ format:
     theme: ember.scss
     css: styles.css
     smooth-scroll: false
-    code-tools: true
+    code-tools: false
     code-copy: hover
     code-overflow: wrap
     code-line-numbers: false

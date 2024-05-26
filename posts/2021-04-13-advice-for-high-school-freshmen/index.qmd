@@ -6,7 +6,7 @@ categories: ["Writing"]
 format:
   html:
     smooth-scroll: false
-    code-tools: true
+    code-tools: false
     code-copy: hover
 embed-resources: true
 filters:

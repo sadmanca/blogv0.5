@@ -8,7 +8,7 @@ categories: ["Writing"]
 format:
   html:
     smooth-scroll: true
-    code-tools: true
+    code-tools: false
     code-copy: hover
 embed-resources: false
 filters:
