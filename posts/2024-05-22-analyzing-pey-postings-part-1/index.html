@@ -160,8 +160,11 @@ gtag('config', 'G-Q095PB1G6R', { 'anonymize_ip': true});
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Sadman’s Blog - Analyzing UofT PEY Co-op Job Postings (2023-2024) - Part 1: Scraping Job Board Data">
 <meta property="og:description" content="Collecting unstructured data on ~2k job postings from UofT’s PEY Co-op job board &amp; pipelining it to a single SQLite DB less than 10MB in size">
-<meta property="og:image" content="https://sadman.ca/posts/2024-05-22-analyzing-pey-postings-part-1/resources/pey-part1.svg">
+<meta property="og:image" content="https://sadman.ca/posts/2024-05-22-analyzing-pey-postings-part-1/resources/pey-part1.png">
 <meta property="og:site_name" content="Sadman's Blog">
+<meta property="og:image:alt" content="Briefcase colored 1/4 blue">
+<meta property="og:image:height" content="852">
+<meta property="og:image:width" content="1280">
 <meta name="twitter:title" content="Sadman’s Blog - Analyzing UofT PEY Co-op Job Postings (2023-2024) - Part 1: Scraping Job Board Data">
 <meta name="twitter:description" content="Collecting unstructured data on ~2k job postings from UofT’s PEY Co-op job board &amp; pipelining it to a single SQLite DB less than 10MB in size">
 <meta name="twitter:image" content="https://sadman.ca/posts/2024-05-22-analyzing-pey-postings-part-1/resources/pey-part1.svg">
@@ -177,7 +180,7 @@ gtag('config', 'G-Q095PB1G6R', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title"><iconify-icon inline="" icon="line-md:sunny-filled-loop" aria-label="Icon sunny-filled-loop from line-md Iconify.design set." title="Icon sunny-filled-loop from line-md Iconify.design set."></iconify-icon>Sadman’s Blog</span>
+    <span class="navbar-title"><iconify-icon inline="" icon="material-symbols:circle" aria-label="Icon circle from material-symbols Iconify.design set." title="Icon circle from material-symbols Iconify.design set."></iconify-icon>Sadman’s Blog</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -224,7 +227,12 @@ gtag('config', 'G-Q095PB1G6R', { 'anonymize_ip': true});
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Writing</div>
+                <div class="quarto-category">Work</div>
+                <div class="quarto-category">University</div>
+                <div class="quarto-category">Data Analysis</div>
+                <div class="quarto-category">Programming</div>
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">SQL</div>
               </div>
                   </div>
   </div>
@@ -246,6 +254,12 @@ gtag('config', 'G-Q095PB1G6R', { 'anonymize_ip': true});
       </div>
     </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">May 28, 2024</p>
+      </div>
+    </div>
       
     </div>
     
@@ -293,7 +307,7 @@ gtag('config', 'G-Q095PB1G6R', { 'anonymize_ip': true});
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/sadmanca/blog/edit/main/posts/2024-05-22-analyzing-pey-postings-part-1/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sadmanca/blog/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/sadmanca/blog/blob/main/posts/2024-05-22-analyzing-pey-postings-part-1/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/sadmanca/blog/edit/main/posts/2024-05-22-analyzing-pey-postings-part-1/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sadmanca/blog/issues/new/choose" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/sadmanca/blog/blob/main/posts/2024-05-22-analyzing-pey-postings-part-1/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div><div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://github.com/sadmanca/uoft-pey-coop-job-postings/releases"><i class="bi bi-database-down"></i>Job Postings</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/sadmanca/uoft-pey-coop-job-postings"><i class="bi bi-github"></i>uoft-pey-coop-job-postings</a></li></ul></div></nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
