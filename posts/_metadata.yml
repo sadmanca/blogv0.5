@@ -9,9 +9,8 @@ title-block-banner: "#eeeeee"
 highlight-style: github
 
 # options specified here will apply to all posts in this folder
-navbar:
-  title: "{{< iconify line-md sunny-filled-loop >}} Sadman's Blog"
 image: "../images/no-thumbnail.svg"
+pagetitle: "{{< meta title >}}"
 
 back-to-top-navigation: true
 page-navigation: true
