@@ -1,5 +1,42 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://raw.githack.com/mburakerman/prognroll/master/src/prognroll.min.js"></script>
+
 <script>
-  
+$(function() {
+  var defaultColor = "#6953ff";
+  var banner = $(".quarto-title-banner");
+  var bannerBgColor = banner.css("background-color");
+
+  // Function to convert RGB to HEX
+  function rgbToHex(rgb) {
+    if (/^#[0-9A-F]{6}$/i.test(rgb)) {
+      return rgb;
+    }
+
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+      return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+  }
+
+  var progressBarColor = defaultColor;
+
+  if (banner.length && rgbToHex(bannerBgColor) !== "#eeeeee") {
+    progressBarColor = bannerBgColor;
+  }
+
+  $("body").prognroll({
+    height: 4, // progress bar height
+    color: progressBarColor, // progress bar background color
+    custom: false // if you make it true, you can add your custom div and see its scroll progress on the page
+  });
+});
+</script>
+
+
+<script>
+
   document.addEventListener('DOMContentLoaded', function () {
     const giscusAttributes = {
       "src": "https://giscus.app/client.js",
@@ -18,11 +55,11 @@
       "crossorigin": "anonymous",
       "async": "",
     };
-  
+
     // Dynamically create script tag
     const giscusScript = document.createElement("script");
     Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
     document.body.appendChild(giscusScript);
   });
-    
+
 </script>

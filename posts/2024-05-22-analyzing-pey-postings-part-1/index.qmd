@@ -39,7 +39,8 @@ twitter:
   image: resources/pey-part1.png
   image-alt: "Briefcase colored 1/4 blue"
 
-title-block-banner: "#61a0ff"
+title-block-banner: "#315080"
+title-block-banner-color: "#f7f7f7"
 
 ---
 

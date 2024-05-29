@@ -30,7 +30,8 @@ twitter:
   image: resources/cheatsheet.png
   image-alt: "A very dense cheatsheet"
 
-title-block-banner: "#af9ce4"
+title-block-banner: "#43298c"
+title-block-banner-color: "#f7f7f7"
 
 ---
 
