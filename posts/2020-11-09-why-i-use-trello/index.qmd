@@ -17,6 +17,13 @@ jupyter: python3
 reference-location: margin
 citation-location: margin
 image: green (3).svg
+open-graph:
+  image: green (3).png
+  image-alt: "Why I use Trello"
+twitter:
+  image: green (3).png
+  image-alt: "Why I use Trello"
+
 ---
 
 ::: {.column-margin}

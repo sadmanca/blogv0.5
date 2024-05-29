@@ -17,6 +17,13 @@ jupyter: python3
 reference-location: margin
 citation-location: margin
 image: green (2).svg
+open-graph:
+  image: green (2).png
+  image-alt: "How I deal with email"
+twitter:
+  image: green (2).png
+  image-alt: "How I deal with email"
+
 ---
 
 ::: {.column-margin}

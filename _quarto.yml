@@ -25,7 +25,7 @@ website:
     creator: "@sadmanca"
     card-style: summary_large_image
   navbar:
-    title: "{{< iconify line-md sunny-filled-loop >}}Sadman's Blog"
+    title: "{{< iconify material-symbols circle >}}Sadman's Blog"
     background: "#eeee"
     collapse-below: lg
     left:

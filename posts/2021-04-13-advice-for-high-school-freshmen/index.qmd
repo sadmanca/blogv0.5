@@ -17,11 +17,18 @@ jupyter: python3
 reference-location: margin
 citation-location: margin
 image: blue (1).svg
+open-graph:
+  image: blue (1).png
+  image-alt: "Advice for high school freshmen"
+twitter:
+  image: blue (1).png
+  image-alt: "Advice for high school freshmen"
+
 ---
 
 As my own high school journey comes to an end, I’ve decided to put together a few of the lessons I’ve learned over the years. I didn't have much guidance when I was a freshman coming into high school, so the following reflections are really what I would’ve told myself back then if I could do so now.
 
-### Prioritize more than just schoolwork 
+### Prioritize more than just schoolwork
 
 This is a big one, and really the biggest lesson you should be taking away from this. Your grades are significant factors that play into university admissions and scholarship decisions. But they’re also not the only factors at play, and I would argue that they’re not the most important either (not just for applications, but for your career and life too). More important than your academics are the experiences that build you as a person; don't miss out on them. (And what are those experiences, you ask? Read on, and you’re sure to find out...)
 
