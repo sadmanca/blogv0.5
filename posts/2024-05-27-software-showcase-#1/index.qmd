@@ -18,13 +18,19 @@ jupyter: python3
 reference-location: margin
 citation-location: margin
 image: resources/asciinema.svg
+open-graph:
+  image: resources/asciinema.png
+  image-alt: "asciinema"
+twitter:
+  image: resources/asciinema.png
+  image-alt: "asciinema"
 ---
 
-I'm always coming across new tools, libraries, and frameworks for creating new things or just making life on the computer here a bit easier for myself by automating tasks, and I always forget to take note of whatever I come across, so this post is the start of (hopefully) many in a series of me doing double-duty to show off all the cool bits of software I come across [^includinghowto] (from things as small as a little bash script to make timing out of hanging programs to as large as the full-blown software toolkits like `ffmpeg`) and make a formal record of all of them for my own notekeeping (because I have so many stars on GitHub and I can hardly remember what a fraction of them are even about). 
+I'm always coming across new tools, libraries, and frameworks for automating tasks or creating cool new things, and I always forget to take note of whatever I come across, so this post is the start of (hopefully) many in a series of me doing double-duty to show off all the interesting bits of software I come across [^includinghowto] (from things as small as bash scripts to things as large as full-blown software toolkits like `ffmpeg`) and make a formal record of all of them for my own notekeeping (because I have starred so many repositories on GitHub and I can hardly remember what a fraction of them are even about). 
 
-[^includinghowto]: Including how to set things up, which is something that I have to learn from scratch every time I go to set things up on yet another device and so it's something that I want to make note (and while I'm doing that, I might as well share it with the rest of the world)
+[^includinghowto]: Including how to set things up and use them, which is something that I have to learn from scratch every time I go to set up my software workflows on yet another device and so it's something that I want to make note (and while I'm doing that, I might as well share it with everybody else)
 
-I usually come across these tools whenever I'm browsing GitHub to find some working piece of software or code to resolve some pain point of mine (or to automate things so I can be lazy), and seeing as that I'm trying to figure out how to include little GIFs of me running code in terminals on blog posts[^renaissance], terminal session recorders are a good place to start.
+I usually come across these tools whenever I'm browsing GitHub to find some working piece of software or code to resolve some pain point of mine (or to automate tasks because I'm lazy), and seeing as that I'm trying to figure out how to include little GIFs of me running code in terminals on blog posts recently[^renaissance], terminal session recorders are a good place to start.
 
 [^renaissance]: I'm trying to take blogging seriously right now (for the record, I've tried at least twice before and failed to stick with it), and for me that means going all out in making my blog posts multimodal and interesting (which is why I care about these terminal recordings).
 
@@ -32,9 +38,9 @@ I usually come across these tools whenever I'm browsing GitHub to find some work
 
 ## What are terminal session recorders?
 
-Terminal session recorders, like [`asciinema`](https://github.com/asciinema/asciinema)[^mentally], are CLI tools that can record (and playback recordings of) standard input/output in terminal sessions. What makes them different from just using screen recording software is that terminal session recorders run *inside* a terminal[^instead] and store the actual raw text from terminal sessions as a stream of events using a custom file format[^asiicast], which means that a) recordings take up *much* less space compared to video files; b) you can actually copy the raw text being displayed when playing back recordings[^sousefulforweb]; and c) you can *customize* how terminal sessions look in recordings (which means you don't have to re-record sessions for modifications like changing font styles).
+Terminal session recorders, like [`asciinema`](https://github.com/asciinema/asciinema)[^mentally], are CLI tools that can record (and playback recordings of) standard input/output in terminal sessions. What makes them different from just using screen recording software is that terminal session recorders run *inside* a terminal[^instead] and store the actual raw text from terminal sessions as a stream of events using a custom file format[^asiicast], which means that **a)** recordings take up *much* less space compared to video files; **b)** you can actually copy the raw text being displayed when playing back recordings[^sousefulforweb] in the terminal or on the web; and **c)** you can *customize* how terminal sessions look in recordings during playback (which means you don't have to re-record sessions for small modifications like changing font styles).
 
-[^mentally]: Despite being constantly reminded that it's spelled "as-ciinema", I just pronounce that word in my head as "ascii-cinema" 😅
+[^mentally]: Despite being constantly reminded my eyes that it's spelled "as-ciinema", I just can't pronouncing it in my head as "ascii-cinema" 😅
 
 [^instead]: Instead of as a window display capture service running as a GUI program.
 
@@ -44,17 +50,17 @@ Terminal session recorders, like [`asciinema`](https://github.com/asciinema/asci
 
 ## Why I care about terminal session recorders
 
-The main reason that I'm interested in terminal session recorders are two-fold:
+There's two reasons why I'm interested in terminal session recorders:
 
 1. I want to be able to show snippets of terminal sessions in blog posts on my website without slowing down pages by loading several videos[^videolens]
 
 2. I want to be able to easily create GIFs/animated SVGs\* for READMEs for my projects on GitHub[^egeagerdb]
 
-\*More on point 2, converting recordings from `asciicast` to GIF/SVG is where `asciinema` falls flat (it only supports its proprietary), which is where middleware like `agg` and `PowerSession-rs` come in.
+\*More on point 2, converting recordings from `asciicast` to GIF/SVG is where `asciinema` falls flat (it only supports its proprietary), which is where middleware like `agg` and `PowerSession-rs` come in (and I'll be taking about both at length later on).
 
-[^videolens]: Of which virtually all will be up to only a couple seconds in length
+[^videolens]: Of which virtually all are expected to be up to only a couple seconds in length
 
-[^egeagerdb]: One example is [eagerDB](https://github.com/sadmanca/eagerDB), which I currently just have a rather boring single image for in its README that I'm looking to spice up a bit.
+[^egeagerdb]: One project that I'd really like to spruce up is [eagerDB](https://github.com/sadmanca/eagerDB), which I currently just have a rather boring single image for in its README.
 
 But before we dive into those `asciinema`-derivatives, let's take a quick look at what exactly `asciinema` has to offer (including how to use it to record sessions).
 
@@ -62,7 +68,7 @@ But before we dive into those `asciinema`-derivatives, let's take a quick look a
 
 ## Installation
 
-You can install `asciinema` using PyPI via pip or using your package repository of choice[^mostaresupported] on Linux, macOS, and FreeBSD[^asyoumightvenoticed].
+You can install [`asciinema`](https://github.com/asciinema/asciinema) using PyPI via pip or using your package repository of choice[^mostaresupported] on Linux, macOS, and FreeBSD[^asyoumightvenoticed].
 
 [^mostaresupported]: Most are supported, you can find the full list at [docs.asciinema.org/manual/cli/installation](https://docs.asciinema.org/manual/cli/installation/)
 
@@ -262,3 +268,5 @@ svg-term --cast=<filename/url> --out output.svg
 Unfortunately, it's been 5 years and counting since the last commit[^andthatwas] made to the `svg-term-cli` project, so while it still works at the time of writing, we're probably not going to be able to expect any of the 25 open issues to be closed anytime soon (at least not until someone forks the repo and resuming maintainance for the project).
 
 [^andthatwas]: And that wasn't even anything meaningful to the codebase, just some edits to documentation, the last real commit actually modifying some code was **7** years ago in 2018.
+
+https://github.com/charmbracelet/vhs
