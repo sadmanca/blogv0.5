@@ -4,12 +4,22 @@ aliases:
   - pey-postings-analysis-part-1.html
 description: "Collecting unstructured data on ~2k job postings from UofT's PEY Co-op job board & pipelining it to a single SQLite DB less than 10MB in size"
 date: "2024-05-22"
-categories: ["Writing"]
+date-modified: "2024-05-28"
+
+categories: ["Work", "University", "Data Analysis", "Programming", "Python", "SQL"]
 format:
   html:
     smooth-scroll: true
     code-tools: false
     code-copy: hover
+    other-links:
+      - text: Job Postings
+        icon: database-down
+        href: https://github.com/sadmanca/uoft-pey-coop-job-postings/releases
+    code-links:
+      - text: uoft-pey-coop-job-postings
+        icon: github
+        href: https://github.com/sadmanca/uoft-pey-coop-job-postings
 embed-resources: false
 filters:
   - quarto
@@ -23,6 +33,13 @@ jupyter: python3
 reference-location: margin
 citation-location: margin
 image: resources/pey-part1.svg
+open-graph:
+  image: resources/pey-part1.png
+  image-alt: "Briefcase colored 1/4 blue"
+twitter:
+  image: resources/pey-part1.png
+  image-alt: "Briefcase colored 1/4 blue"
+
 ---
 
 Whether you're a new applicant to engineering/computer science at the University of Toronto (UofT) or someone who's going through their first, second, or even third or fourth years, you've probably been curious at one point or another about what jobs are actually posted on the much acclaimed[^welltosome] PEY Co-op job board[^qns] for 12-16 month positions .

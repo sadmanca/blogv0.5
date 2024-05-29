@@ -1,7 +1,7 @@
 ---
 title: "On keeping a journal"
 description: "Why you should be writing if you aren't already"
-date: "2020-17-08" 
+date: "2020-17-08"
 categories: ["Writing"]
 format:
   html:
@@ -16,14 +16,21 @@ jupyter: python3
 
 reference-location: margin
 citation-location: margin
-image: green.svg
+image: blue (2).svg
+open-graph:
+  image: blue (2).png
+  image-alt: "On keeping a journal"
+twitter:
+  image: blue (2).png
+  image-alt: "On keeping a journal"
+
 ---
 
 ::: {.column-margin}
 
 ```{python}
 def journal():
-    j = ["🎈 Hot air balloon > Pajamas", 
+    j = ["🎈 Hot air balloon > Pajamas",
          "📺 Argued with Netflix, lost.",
          {"Career": "🚗 Stuck in traffic",
           "Next": "🛣️ Hopefully not traffic",
