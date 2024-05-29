@@ -39,6 +39,8 @@ twitter:
   image: resources/pey-part1.png
   image-alt: "Briefcase colored 1/4 blue"
 
+title-block-banner: "#61a0ff"
+
 ---
 
 Whether you're a new applicant to engineering/computer science at the University of Toronto (UofT) or someone who's going through their first, second, or even third or fourth years, you've probably been curious at one point or another about what jobs are actually posted on the much acclaimed[^welltosome] PEY Co-op job board[^qns] for 12-16 month positions .
