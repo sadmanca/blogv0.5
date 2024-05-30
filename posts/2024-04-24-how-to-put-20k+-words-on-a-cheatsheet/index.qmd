@@ -1,14 +1,13 @@
 ---
 title: "Putting 20k+ words on a 1MB cheatsheet"
 description: "The art of maximizing content on a cheatsheet while maintaining readability"
+aliases: ["/typst-cheatsheet"]
 date: "2024-04-24"
 date-modified: "2024-05-28"
 categories: ["University", "Python", "Typst"]
 format:
   html:
-    smooth-scroll: false
-    code-tools: false
-    code-copy: hover
+    smooth-scroll: true
     syntax-definitions:
       - ../../misc/typst.xml
     code-links:

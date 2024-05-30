@@ -5,9 +5,7 @@ date: "2020-12-14"
 categories: ["Writing"]
 format:
   html:
-    smooth-scroll: false
-    code-tools: false
-    code-copy: hover
+    smooth-scroll: true
 embed-resources: true
 filters:
   - quarto
