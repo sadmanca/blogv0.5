@@ -25,6 +25,9 @@ format:
       - text: svg-term-cli
         icon: github
         href: https://github.com/marionebl/svg-term-cli
+      - text: term-svg
+        icon: github
+        href: https://github.com/MrMarble/termsvg
 embed-resources: false
 filters:
   - quarto
