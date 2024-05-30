@@ -1,5 +1,5 @@
 ---
-title: "**Software Showcase #1:** Recording terminal sessions using **`asciinema`** and its derivatives"
+title: "**Software Showcase #1: Recording terminal sessions using `asciinema` and its derivatives**"
 aliases: ["/asciinema"]
 description: "CLI tools for recording terminal sessions locally (and to the web) as `asciicast` files (`.cast`), GIFs, and animated SVGs"
 date: "2024-05-27"
@@ -67,10 +67,10 @@ I usually come across these tools whenever I'm browsing GitHub to find some work
 ::: {.callout-note}
 ## Summary
 
-Use [**`asciinema`**](https://github.com/asciinema/asciinema) for recording terminal sessions to local `.cast` files, replaying `.cast` files in a terminals, & for uploading to [asciinema.org](https://asciinema.org)
+Use [**`asciinema`**](https://github.com/asciinema/asciinema) for recording terminal sessions to local `.cast` files, replaying `.cast` files in a terminals, & for uploading `.cast` files to [asciinema.org](https://asciinema.org) (or your own server).
 
-* Recordings uploaded to [asciinema.org](https://asciinema.org) can be embedded as dynamic `asciinema` recordings in HTML webpages (like the ones you can see throughout this blog post!)
-* On Windows, use [**`PowerSession-rs`**](https://github.com/Watfaq/PowerSession-rs) (a Windows-based drop-in replacement fork of `asciinema`)
+* Recordings uploaded to [asciinema.org](https://asciinema.org) can be embedded as dynamic `asciinema` recording iframes in HTML webpages (like those you see throughout this post!)
+* On Windows, use [**`PowerSession-rs`**](https://github.com/Watfaq/PowerSession-rs) (a drop-in replacement fork of `asciinema`)
 * Use [**`agg`**](https://github.com/asciinema/agg) to convert `asciinema` recordings (`.cast` or web URL) to ***GIFs***
 * Use [**`svg-term-cli`**](https://github.com/marionebl/svg-term-cli) to convert `asciinema` recordings (`.cast` or web URL) to ***animated SVGs***
 
@@ -111,7 +111,7 @@ Terminal session recorders, like [`asciinema`](https://github.com/asciinema/asci
 ::: {#fig-sumfunc}
 
 ```{=html}
-<script id="asciicast-316444" src="https://asciinema.org/a/316444.js" data-speed="0.8" data-autoplay="true" data-loop="true" data-preload="false" async></script>
+<script id="asciicast-9593" src="https://asciinema.org/a/9593.js" data-speed="2.8" data-autoplay="true" data-loop="true" data-preload="false" async></script>
 ```
 What an `asciinema` recording embedded on the web looks like. **Shown:** *"Iterative git rebase with vim"*. **Source:** <https://asciinema.org/a/9593>
 :::
@@ -133,7 +133,7 @@ That's all very promising, but there's two very specific reasons as to why *I'm*
 
 2. I want to be able to easily create GIFs/animated SVGs for READMEs for my projects on GitHub[^egeagerdb]
 
-::: {.callout-warning collapse="true"}
+::: {.callout-warning}
 ## Why `asciinema` is not enough
 
 More on that second point above, converting recordings from `asciicast` to GIF/SVG is one area where `asciinema` is lacking (it only supports its proprietary file format), which is where middleware like `agg` and `svg-term-cli` come in (and I'll be taking about both at length later on).
@@ -209,20 +209,20 @@ Replay a terminal session recorded using `asciinema rec` (at a local file or url
 
   Markers are like breakpoints or video chapters in YouTube that allow to mark specific timestamps in recordings for navigation; you can configure the `asciinema` recorder to have a [keyboard shortcut for adding markers during recording](https://docs.asciinema.org/manual/cli/configuration/) or edit an existing recording and insert marker lines as specified in the [documentation for asciinema markers](https://docs.asciinema.org/manual/player/markers/). On the web, markers are shown in the video timeline (similar to video chapters in YouTube), and can make jumping to points of interest in a terminal session a lot easier.
 
-::: {.column-page-inset-left}
-::: {#fig-record}
-```{=html}
-<script id="asciicast-e5jWLa6Ey0IIyHuSLAc4Saak8" src="https://asciinema.org/a/e5jWLa6Ey0IIyHuSLAc4Saak8" data-speed="3" data-autoplay="true" data-loop="true" data-preload="false" data-cols="80" data-rows="25" async></script>
-```
-Try jumping to different markers by clicking on the recording timeline.
-:::
-:::
-
 ### `> asciinema upload <filename>`
 
 This command uploads a local recording to whatever URL is specified in the `ASCIINEMA_API_URL` environment variable ([asciinema.org](https://asciinema.org/) by default[^specificallyunderyour]).
 
 [^specificallyunderyour]: Under whatever account has been authenticated via `> asciinema auth` or anonymously if you haven't run that yet.
+
+::: {.column-page-inset-left}
+::: {#fig-record}
+```{=html}
+<script id="asciicast-e5jWLa6Ey0IIyHuSLAc4Saak8" src="https://asciinema.org/a/e5jWLa6Ey0IIyHuSLAc4Saak8" data-speed="3.8" data-autoplay="true" data-loop="true" data-preload="false" data-cols="80" data-rows="25" async></script>
+```
+Try jumping to different markers by clicking on the recording timeline.
+:::
+:::
 
 ## `asciinema` on the web
 
@@ -231,12 +231,12 @@ You can view your and others' uploaded recordings on [asciinema.org](https://asc
 [^somequitecool]: And there are some quite cool recordings on there, from a [demo of a mapping CLI](https://asciinema.org/a/117813) to [iterative git rebasing with `vim`](https://asciinema.org/a/9593).
 
 ```{.html}
-<script src="https://asciinema.org/a/635483.js" id="asciicast-635483" async></script>
+<script src="https://asciinema.org/a/646222.js" id="asciicast-646222" async></script>
 ```
 
 ::: {#fig-one}
 ```{=html}
-<script src="https://asciinema.org/a/635483.js" id="asciicast-635483" async></script>
+<script src="https://asciinema.org/a/646222.js" id="asciicast-646222" async></script>
 ```
 
 The resulting embedded `asciinema` recording.
@@ -247,7 +247,7 @@ While the look and feel of the embedded player defaults to the original uploader
 
 ```{.html}
 <script>
-  src="https://asciinema.org/a/9593.js"
+  src="https://asciinema.org/a/646222.js"
   id="..."
   data-start-at="00:40"
   data-autoplay="true"
@@ -265,7 +265,7 @@ While the look and feel of the embedded player defaults to the original uploader
 
 ::: {#fig-another}
 ```{=html}
-<script src="https://asciinema.org/a/635483.js" id="asciicast-635483-two" data-start-at="00:40" data-autoplay="true" data-loop="true" data-speed="2.75" data-idle-time-limit="2" data-theme="solarized-dark" data-cols="50" data-rows="18" data-preload="true" async></script>
+<script src="https://asciinema.org/a/646222.js" id="asciicast-646222-two" data-start-at="00:40" data-autoplay="true" data-loop="true" data-speed="2.75" data-idle-time-limit="2" data-theme="solarized-dark" data-cols="50" data-rows="18" data-preload="true" async></script>
 ```
 The resulting embedded `asciinema` recording *with additional configuration & zoomed in*.
 :::
@@ -351,9 +351,11 @@ To remedy that, we can use [**`svg-term-cli`**](https://github.com/marionebl/svg
 
 ## Why use animated SVGs over GIFs
 
-For one, animated SVGs are able to look a *lot* more crisp at larger resolutions than GIFs by using vector images instead of pixel based animation. Adding on to that (and why you should be using animated SVGs instead of GIFs when embedding recordings on websites), this also allows animated SVGs to have a *much* smaller file size[^since], which is a very nice combination of features, making `svg-term-cli` almost[^wewillgettothis] the ideal tool for rendering your `asciinema` recordings.
+For one, animated SVGs are able to look a *lot* more crisp at larger resolutions than GIFs by using vector images instead of pixel based animation. Adding on to that (and why you should be using animated SVGs instead of GIFs when embedding recordings on websites), this also allows animated SVGs to have a *much* smaller file size, which is a very nice combination of features, making `svg-term-cli` almost[^wewillgettothis] the ideal tool for rendering your `asciinema` recordings[^noteableexception].
 
 [^wewillgettothis]: To find out why it's *almost* ideal (instead of just being ideal), continue reading to the **"Where `svg-term-cli` falls flat"** section.
+
+[^noteableexception]: Notable exception: you can't rewind or copy text from recordings, making this more of a cosmetic option.
 
 
 ![An animated SVG generated from an `asciinema` recording using `svg-term-cli`.](resources/svg-term-cli.svg)

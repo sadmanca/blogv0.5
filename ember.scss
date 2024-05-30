@@ -89,3 +89,21 @@ div[id*="asciicast-container"] {
 .quarto-sidebar-toggle-title {
   padding-top: 6px;
 }
+
+@media (min-width: 992px) {
+  .quarto-title-banner {
+    padding-top: 4.5em;
+    margin-top: -2.5em;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .quarto-title-banner {
+    padding-top: 2.8em;
+    margin-top: -2em;
+  }
+}
+
+.navbar {
+  background-color: rgba(238, 238, 238, 1) !important;
+}
