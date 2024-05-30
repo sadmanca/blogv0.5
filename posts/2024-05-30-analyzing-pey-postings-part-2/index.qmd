@@ -1,0 +1,60 @@
+---
+title: "Analyzing UofT PEY Co-op Job Postings - Part 2: Cleaning Job Posting Data"
+aliases: ["/pey-job-postings-database.html"]
+description: "Cleaning data on job postings from the University of Toronto PEY Co-op job board"
+date: "2024-05-30"
+date-modified: "2024-05-30"
+
+categories: ["Work", "University", "Data Analysis", "Programming", "Python", "SQL"]
+format:
+  html:
+    smooth-scroll: true
+    code-tools: false
+    code-copy: hover
+    other-links:
+      - text: "Part 1: Scraping Jobs From PEY Portal"
+        icon: 1-circle
+        href: https://sadmanca/posts/2024-05-22-analyzing-pey-postings-part-1
+      - text: "Part 2: Cleaning Job Postings Data"
+        icon: 2-circle-fill
+        href: https://sadmanca/posts/2024-05-30-analyzing-pey-postings-part-2
+      - text: Job Postings
+        icon: database-down
+        href: https://github.com/sadmanca/uoft-pey-coop-job-postings/releases
+    code-links:
+      - text: uoft-pey-coop-job-postings
+        icon: github
+        href: https://github.com/sadmanca/uoft-pey-coop-job-postings
+embed-resources: false
+filters:
+  - quarto
+  - line-highlight
+databases:
+  - name: job_postings
+    path: "https://raw.githubusercontent.com/sadmanca/uoft-pey-coop-job-postings/raw/job_postings.sql"
+jupyter: python3
+
+reference-location: margin
+citation-location: margin
+image: resources/pey-part-2.svg
+open-graph:
+  image: resources/pey-part-2.png
+  image-alt: "Briefcase colored 2/4 blue"
+twitter:
+  image: resources/pey-part-2.png
+  image-alt: "Briefcase colored 2/4 blue"
+
+title-block-banner: "#315080"
+title-block-banner-color: "#f7f7f7"
+
+---
+
+- table of contents at top indicating parts in series
+- extending relational database by making tables for companies
+- manually going thru fields like job locations and modifinyg (e.g. standardize location to city, country; deal with multiple countries listed)
+- part 3 is analyzing for trends
+- part 4 is comparing with waterloo co-op postings (found a fantastic resource in waterlooworms repo)
+- add links to cleaned databases (see datasette) at top of all parts and end of parts 1 & 2
+    - consider using react components instead of table links (altho tables work well as is)
+- read up on optimizing/cleaning relational databases in SQL 
+- create JSON, CSV exports of data and at least 1 interactive viewer (leave visualizations for part 3)
