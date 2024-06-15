@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: gh-pages
+
+name: Jampack
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: 'gh-pages'
+
+      - name: Use jampack cache
+      - uses: actions/cache@v3
+        with:
+          path: '.jampack'
+          key: jampack-${{ github.run_id }}
+          restore-keys: |
+            jampack
+      - name: Run jampack
+        shell: bash
+        run: npx @divriots/jampack ./posts
