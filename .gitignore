@@ -2,3 +2,6 @@
 _site
 
 /.quarto/
+
+node_modules
+package-lock.json

@@ -10,19 +10,46 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
           ref: 'gh-pages'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install jampack
+        run: npm install -D @divriots/jampack
+
       - name: Use jampack cache
-      - uses: actions/cache@v3
+        uses: actions/cache@v3
         with:
           path: '.jampack'
           key: jampack-${{ github.run_id }}
           restore-keys: |
             jampack
+
       - name: Run jampack
         shell: bash
-        run: npx @divriots/jampack ./posts
+        run: npx @divriots/jampack --fast ./posts
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git reset node_modules package-lock.json
+          git commit -m 'Jampack generated files'
+          git push
